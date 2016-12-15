@@ -14,9 +14,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import gql from 'graphql-tag'
 
-import Module from './Module.vue'
+import Module from './ModuleListItem.vue'
+
+const moduleQuery = gql`query {
+  modules {
+    label
+    url
+  }
+}`
 
 export default {
   name: 'page-home',
@@ -31,8 +38,8 @@ export default {
     }
   },
 
-  computed: mapGetters({
-    modules: 'modules'
-  })
+  apollo: {
+    modules: moduleQuery
+  }
 }
 </script>
