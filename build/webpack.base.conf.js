@@ -20,6 +20,7 @@ module.exports = {
     filename: '[name].js'
   },
   resolve: {
+    root: ['src'],
     extensions: ['', '.js', '.vue', '.json'],
     fallback: [path.join(__dirname, '../node_modules')],
     alias: {

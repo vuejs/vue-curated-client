@@ -3,6 +3,11 @@ import App from './App'
 
 import './apollo'
 
+import * as filters from './filters'
+for (const k in filters) {
+  Vue.filter(k, filters[k])
+}
+
 import router from './router'
 import store from './store'
 
