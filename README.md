@@ -1,4 +1,4 @@
-# vue-forge
+# vue-curated-client
 
 > Curated vue packages.
 
