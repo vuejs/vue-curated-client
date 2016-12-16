@@ -1,35 +1,43 @@
 <template>
   <div class="module-list-item">
-    <div class="general">
-      <span class="label">
-        {{ module.label }}
-        <a :href="module.url"><i class="material-icons">open_in_new</i></a>
-        <span class="vue-versions">
-          <span class="vue-version" v-for="version of module.vueVersions">{{ version }}</span>
-        </span>
-      </span>
-
-      <span class="details" v-if="data">
-        <span class="stat stars" title="Stars">
-          {{ data.details.stargazers_count | shortenNumber }}
-          <i class="material-icons">star</i>
-        </span>
-
-        <span class="stat forks" title="Forks">
-          {{ data.details.forks_count | shortenNumber }}
-          <i class="material-icons">call_split</i>
-        </span>
-
-        <span class="stat issues" title="Open Issues">
-          {{ data.details.open_issues_count | shortenNumber }}
-          <i class="material-icons">error_outline</i>
-        </span>
-      </span>
+    <div class="avatar" v-if="data" :title="data.details.owner.login">
+      <a :href="data.details.owner.html_url" target="_blank">
+        <img :src="data.details.owner.avatar_url" />
+      </a>
     </div>
 
-    <div class="secondary" v-if="data">
-      <span class="category">{{ data.category.label }}</span>
-      <span class="description">{{ data.details.description }}</span>
+    <div class="content">
+      <div class="general">
+        <span class="label">
+          {{ module.label }}
+          <a :href="module.url" target="_blank"><i class="material-icons">open_in_new</i></a>
+          <span class="vue-versions">
+            <span class="vue-version" v-for="version of module.vueVersions">{{ version }}</span>
+          </span>
+        </span>
+
+        <span class="details" v-if="data">
+          <span class="stat stars" title="Stars">
+            {{ data.details.stargazers_count | shortenNumber }}
+            <i class="material-icons">star</i>
+          </span>
+
+          <span class="stat forks" title="Forks">
+            {{ data.details.forks_count | shortenNumber }}
+            <i class="material-icons">call_split</i>
+          </span>
+
+          <span class="stat issues" title="Open Issues">
+            {{ data.details.open_issues_count | shortenNumber }}
+            <i class="material-icons">error_outline</i>
+          </span>
+        </span>
+      </div>
+
+      <div class="secondary" v-if="data">
+        <span class="category">{{ data.category.label }}</span>
+        <span class="description">{{ data.details.description }}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -49,7 +57,7 @@ const detailsQuery = gql`query details($url: String!) {
       owner {
         login
         avatar_url
-        url
+        html_url
       }
     }
     category {
@@ -87,15 +95,35 @@ export default {
 
 .module-list-item {
   padding: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 
   &:not(:last-child) {
     border-bottom: solid 1px darken(white, 5%);
   }
 
-  > div {
-    display: flex;
-    flex-direction: row;
-    margin: 4px 0;
+  .avatar {
+    flex: auto 0 0;
+    width: 32px;
+    height: 32px;
+    margin-right: 12px;
+
+    img {
+      max-width: 32px;
+      max-height: 32px;
+      border-radius: 3px;
+    }
+  }
+
+  .content {
+    flex: 100% 1 1;
+
+    > div {
+      display: flex;
+      flex-direction: row;
+      margin: 4px 0;
+    }
   }
 
   .label {
