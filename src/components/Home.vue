@@ -20,6 +20,7 @@ import gql from 'graphql-tag'
 import Module from './ModuleListItem.vue'
 
 const moduleFields = `
+id
 label
 url
 vue

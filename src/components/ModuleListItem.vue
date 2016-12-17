@@ -45,8 +45,8 @@
 <script>
 import gql from 'graphql-tag'
 
-const detailsQuery = gql`query details($url: String!) {
-  module(url: $url) {
+const detailsQuery = gql`query details($id: String!) {
+  module(id: $id) {
     details {
       name
       description
@@ -79,7 +79,7 @@ export default {
       query: detailsQuery,
       variables () {
         return {
-          url: this.module.url
+          id: this.module.id
         }
       },
       update ({ module }) {
