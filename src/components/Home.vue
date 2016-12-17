@@ -19,19 +19,27 @@ import gql from 'graphql-tag'
 
 import Module from './ModuleListItem.vue'
 
+const moduleFields = `
+label
+url
+vue
+links {
+  url
+  label
+}
+status
+badge
+`
+
 const moduleQuery = gql`query {
   modules {
-    label
-    url
-    vueVersions
+    ${moduleFields}
   }
 }`
 
 const searchQuery = gql`query search ($text: String!) {
   searchModules (text: $text) {
-    label
-    url
-    vueVersions
+    ${moduleFields}
   }
 }`
 
