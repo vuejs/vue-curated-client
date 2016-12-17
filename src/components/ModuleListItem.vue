@@ -12,7 +12,7 @@
           {{ module.label }}
           <a :href="module.url" target="_blank"><i class="material-icons">open_in_new</i></a>
           <span class="vue-versions">
-            <span class="vue-version" v-for="version of module.vueVersions">{{ version }}</span>
+            <span class="vue-version" v-for="version of module.vue">{{ version }}</span>
           </span>
         </span>
 
