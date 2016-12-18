@@ -1,7 +1,7 @@
 <template>
   <div class="module-list-item">
     <div class="module-header" @click="handleHeaderClick">
-      <div class="avatar" v-if="data" :title="data.details.owner.login">
+      <div class="avatar" v-if="data" v-tooltip="data.details.owner.login">
         <a :href="data.details.owner.html_url" target="_blank">
           <img :src="data.details.owner.avatar_url" />
         </a>
@@ -22,17 +22,17 @@
           </span>
 
           <span class="details" v-if="data">
-            <span class="stat stars" title="Stars">
+            <span class="stat stars" v-tooltip="'Stars'">
               {{ data.details.stargazers_count | shortenNumber }}
               <i class="material-icons">star</i>
             </span>
 
-            <span class="stat forks" title="Forks">
+            <span class="stat forks" v-tooltip="'Forks'">
               {{ data.details.forks_count | shortenNumber }}
               <i class="material-icons">call_split</i>
             </span>
 
-            <span class="stat issues" title="Open Issues">
+            <span class="stat issues" v-tooltip="'Open Issues'">
               {{ data.details.open_issues_count | shortenNumber }}
               <i class="material-icons">error_outline</i>
             </span>

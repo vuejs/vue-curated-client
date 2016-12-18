@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import App from './App'
+import VTooltip from 'v-tooltip'
+
+Vue.use(VTooltip)
 
 import './api/apollo'
 
