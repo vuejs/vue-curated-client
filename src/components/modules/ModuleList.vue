@@ -2,7 +2,7 @@
   <div class="page">
     <div class="modules">
       <div class="logo">
-        <img src="../assets/logo.png" />
+        <img src="~assets/logo.png" />
       </div>
 
       <div class="toolbar">
@@ -16,21 +16,9 @@
 
 <script>
 import gql from 'graphql-tag'
+import { moduleFields } from 'api/data'
 
 import Module from './ModuleListItem.vue'
-
-const moduleFields = `
-id
-label
-url
-vue
-links {
-  url
-  label
-}
-status
-badge
-`
 
 const moduleQuery = gql`query {
   modules {
@@ -82,9 +70,6 @@ export default {
 @import "~style/imports";
 
 .modules {
-  max-width: 600px;
-  margin: 12px auto;
-
   .toolbar {
     padding: 8px 0;
   }
@@ -94,7 +79,7 @@ export default {
     box-sizing: border-box;
     width: 100%;
     border: solid 2px lighten($primary-color, 20%);
-    border-radius: 3px;
+    border-radius: 2px;
     padding: 6px 12px;
     font-family: inherit;
     font-size: inherit;

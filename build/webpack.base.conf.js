@@ -37,13 +37,11 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: 'eslint',
-        include: projectRoot,
         exclude: /node_modules/
       },
       {
         test: /\.js$/,
         loader: 'eslint',
-        include: projectRoot,
         exclude: /node_modules/
       }
     ],
@@ -55,7 +53,6 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel',
-        include: projectRoot,
         exclude: /node_modules/
       },
       {

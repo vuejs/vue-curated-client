@@ -21,12 +21,21 @@ body {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  margin: 0 24px;
+}
+
+html,
+body,
+#app {
+  height: 100%;
 }
 
 a {
   color: $primary-color;
   text-decoration: none;
+
+  &:hover {
+    color: lighten($primary-color, 10%);
+  }
 }
 
 .material-icons {

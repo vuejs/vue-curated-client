@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 
-import './apollo'
+import './api/apollo'
 
 import * as filters from './filters'
 for (const k in filters) {

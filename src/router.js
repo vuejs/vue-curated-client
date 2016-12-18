@@ -3,43 +3,37 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-import Home from './components/Home.vue'
+import Home from 'components/pages/Home.vue'
+import Module from 'components/pages/Module.vue'
+import NotFound from 'components/pages/NotFound.vue'
 
+/* eslint-disable object-property-newline */
 const routes = [
-  { path: '/', name: 'home', component: Home }
+  { path: '/', name: 'home', component: Home, children: [
+    { path: 'module/:id', name: 'module', component: Module }
+  ] },
+  { path: '*', component: NotFound }
 ]
 
-// scrollBehavior:
-// - only available in html5 history mode
-// - defaults to no scroll behavior
-// - return false to prevent scroll
 const scrollBehavior = (to, from, savedPosition) => {
   if (savedPosition) {
-    // savedPosition is only available for popstate navigations.
     return savedPosition
   } else {
     const position = {}
-    // new navigation.
-    // scroll to anchor by returning the selector
     if (to.hash) {
       position.selector = to.hash
     }
-    // check if any matched route config has meta that requires scrolling to top
     if (to.matched.some(m => m.meta.scrollToTop)) {
-      // cords will be used if no selector is provided,
-      // or if the selector didn't match any element.
       position.x = 0
       position.y = 0
     }
-    // if the returned position is falsy or an empty object,
-    // will retain current scroll position.
     return position
   }
 }
 
 const router = new VueRouter({
   routes,
-  mode: 'history',
+  // mode: 'history',
   scrollBehavior
 })
 
