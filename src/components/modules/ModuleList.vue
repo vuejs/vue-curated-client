@@ -1,5 +1,5 @@
 <template>
-  <div class="modules">
+  <div class="module-list">
     <div class="logo">
       <router-link :to="{ name: 'home' }"><img src="~assets/logo.png" /></router-link>
     </div>
@@ -11,7 +11,9 @@
       </span>
     </div>
 
-    <module v-for="module of moduleList" :module="module"></module>
+    <div class="modules">
+      <module v-for="module of moduleList" :module="module"></module>
+    </div>
   </div>
 </template>
 
@@ -70,10 +72,14 @@ export default {
 <style lang="scss" scoped>
 @import "~style/imports";
 
-.modules {
-  .toolbar {
-    padding: 8px 0;
-  }
+.module-list {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.toolbar {
+  padding: 8px 0;
 }
 
 .logo {
@@ -82,5 +88,11 @@ export default {
   img {
     max-height: 32px;
   }
+}
+
+.modules {
+  flex: auto 1 1;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 </style>

@@ -86,6 +86,7 @@ input {
 
 .search-input {
   position: relative;
+  display: block;
 
   input {
     padding-left: 42px;

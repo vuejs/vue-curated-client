@@ -46,8 +46,19 @@ export default {
   max-width: 1000px;
   overflow-x: hidden;
   overflow-y: auto;
+}
 
-  @media (min-width: 1700px) {
+@media (min-width: 1700px) {
+  .page {
+    width: 1700px;
+    margin: auto;
+  }
+
+  .left-pane {
+    border-left: solid 1px darken(white, 5%);
+  }
+
+  .page-content {
     border-right: solid 1px darken(white, 5%);
   }
 }
