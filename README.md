@@ -2,7 +2,7 @@
 
 > Curated vue packages.
 
-Consume [vue-curated](https://github.com/Akryum/vue-curated/blob/master/MODULES.md) and need [vue-curated-server](https://github.com/Akryum/vue-curated-server).
+Consumes [vue-curated](https://github.com/Akryum/vue-curated/blob/master/MODULES.md) and needs [vue-curated-server](https://github.com/Akryum/vue-curated-server).
 
 ## Build Setup
 

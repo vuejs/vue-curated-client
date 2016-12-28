@@ -3,13 +3,15 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-import Home from 'components/pages/Home.vue'
-import Module from 'components/pages/Module.vue'
-import NotFound from 'components/pages/NotFound.vue'
+import Main from 'components/pages/Main'
+import Home from 'components/pages/Home'
+import Module from 'components/pages/Module'
+import NotFound from 'components/pages/NotFound'
 
 /* eslint-disable object-property-newline */
 const routes = [
-  { path: '/', name: 'home', component: Home, children: [
+  { path: '/', component: Main, children: [
+    { path: '', name: 'home', component: Home },
     { path: 'module/:id', name: 'module', component: Module }
   ] },
   { path: '*', component: NotFound }
