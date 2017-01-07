@@ -10,6 +10,9 @@ Consumes [vue-curated](https://github.com/Akryum/vue-curated/blob/master/MODULES
 # install dependencies
 npm install
 
+# set GRAPHQL_URL env
+GRAPHQL_URL=http://localhost:3000/graphql
+
 # serve with hot reload at localhost:8080
 npm run dev
 
