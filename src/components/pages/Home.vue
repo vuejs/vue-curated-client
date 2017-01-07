@@ -70,6 +70,8 @@ const kazuponAvatar = 'https://avatars3.githubusercontent.com/u/72989?v=3&s=460'
 const akryumAvatar = 'https://avatars3.githubusercontent.com/u/2798204?v=3&s=460'
 
 export default {
+  name: 'home',
+
   data () {
     return {
       modules: [
@@ -78,10 +80,10 @@ export default {
         { icon: vueAvatar, name: 'vuex', category: 'State' },
         { icon: nuxtAvatar, name: 'nuxt', category: 'Framework' },
         { icon: kazuponAvatar, name: 'vue-i18n', category: 'i18n' },
-        { icon: akryumAvatar, name: 'vue-apollo', category: 'Data' }
-      ]
+        { icon: akryumAvatar, name: 'vue-apollo', category: 'Data' },
+      ],
     }
-  }
+  },
 }
 </script>
 

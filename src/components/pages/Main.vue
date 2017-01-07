@@ -1,7 +1,7 @@
 <template>
   <div class="page">
 
-    <module-list class="left-pane"></module-list>
+    <main-pane class="left-pane"></main-pane>
 
     <div class="page-content">
       <router-view></router-view>
@@ -11,12 +11,14 @@
 </template>
 
 <script>
-import ModuleList from '../modules/ModuleList.vue'
+import MainPane from '../modules/MainPane.vue'
 
 export default {
+  name: 'main',
+
   components: {
-    ModuleList
-  }
+    MainPane,
+  },
 }
 </script>
 

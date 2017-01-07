@@ -6,8 +6,10 @@
 import ModuleDetails from '../modules/ModuleDetails.vue'
 
 export default {
+  name: 'module',
+
   components: {
-    ModuleDetails
-  }
+    ModuleDetails,
+  },
 }
 </script>

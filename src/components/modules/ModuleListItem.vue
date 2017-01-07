@@ -78,8 +78,8 @@ const detailsQuery = gql`query details($id: String!) {
 export default {
   props: {
     module: {
-      type: Object
-    }
+      type: Object,
+    },
   },
 
   apollo: {
@@ -87,11 +87,11 @@ export default {
       query: detailsQuery,
       variables () {
         return {
-          id: this.module.id
+          id: this.module.id,
         }
       },
-      update: ({ module }) => module
-    }
+      update: ({ module }) => module,
+    },
   },
 
   methods: {
@@ -104,8 +104,8 @@ export default {
       if (target.tagName !== 'A') {
         this.$router.push({ name: 'module', params: { id: this.module.id } })
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -113,6 +113,7 @@ export default {
 @import "~style/imports";
 
 .module-list-item {
+  cursor: default;
 
   &:not(:last-child) {
     border-bottom: solid 1px darken(white, 5%);
@@ -123,6 +124,7 @@ export default {
     display: flex;
     flex-direction: row;
     align-items: center;
+    transition: background .15s;
 
     &:hover {
       background: rgba($primary-color, .1);

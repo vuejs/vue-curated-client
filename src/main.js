@@ -11,6 +11,8 @@ for (const k in filters) {
   Vue.filter(k, filters[k])
 }
 
+import './components/common'
+
 import router from './router'
 import store from './store'
 
@@ -19,5 +21,5 @@ new Vue({
   router,
   store,
   el: '#app',
-  render: h => h(App)
+  render: h => h(App),
 })

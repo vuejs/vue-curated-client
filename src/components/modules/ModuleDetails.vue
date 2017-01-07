@@ -114,14 +114,14 @@ import Readme from './Readme.vue'
 
 export default {
   components: {
-    Readme
+    Readme,
   },
 
   props: {
     id: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
 
   apollo: {
@@ -129,12 +129,12 @@ export default {
       query: detailsQuery,
       variables () {
         return {
-          id: this.id
+          id: this.id,
         }
       },
-      update: ({ module }) => module
-    }
-  }
+      update: ({ module }) => module,
+    },
+  },
 }
 </script>
 

@@ -12,9 +12,9 @@ import NotFound from 'components/pages/NotFound'
 const routes = [
   { path: '/', component: Main, children: [
     { path: '', name: 'home', component: Home },
-    { path: 'module/:id', name: 'module', component: Module }
+    { path: 'module/:id', name: 'module', component: Module },
   ] },
-  { path: '*', component: NotFound }
+  { path: '*', component: NotFound },
 ]
 
 const scrollBehavior = (to, from, savedPosition) => {
@@ -36,7 +36,7 @@ const scrollBehavior = (to, from, savedPosition) => {
 const router = new VueRouter({
   routes,
   mode: 'history',
-  scrollBehavior
+  scrollBehavior,
 })
 
 export default router
