@@ -139,12 +139,7 @@ export default {
     height: 32px;
     margin-right: 12px;
 
-    img {
-      max-width: 32px;
-      max-height: 32px;
-      border-radius: 3px;
-    }
-
+    img,
     .empty-avatar {
       background: white;
       width: 32px;

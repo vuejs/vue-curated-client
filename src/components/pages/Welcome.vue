@@ -3,7 +3,7 @@
     <h1>Welcome</h1>
     <h2>Find the best packages for your Vue app!</h2>
     <section class="image preview">
-      <img src="~assets/preview.svg" />
+      <img src="~assets/preview.svg" width="500" height="300" />
     </section>
     <section class="info">
       Browse a curated list of high-quality <a href="https://vuejs.org/">Vue.js</a> packages to help you build awesome apps.
