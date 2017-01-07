@@ -118,10 +118,10 @@ export default {
 .module-list-item {
   cursor: default;
   position: relative;
-  height: 70px;
+  height: 90px;
 
   .module-header {
-    padding: 12px;
+    padding: 22px 12px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -129,7 +129,7 @@ export default {
     border-radius: 2px;
 
     &:hover {
-      background: rgba($primary-color, .1);
+      background: rgba(white, .9);
     }
   }
 
@@ -253,11 +253,18 @@ export default {
       text-align: right;
       flex: auto 1 1;
       min-width: 50px;
+      max-width: 200px;
       @include ellipsis;
 
       @media #{$small-screen} {
         display: none;
       }
+    }
+  }
+
+  &.active {
+    .module-header {
+      background: rgba($primary-color, .1);
     }
   }
 }

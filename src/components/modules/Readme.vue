@@ -74,7 +74,7 @@ export default {
 .readme {
   border: solid 1px darken(white, 5%);
   margin: 24px 0;
-  padding: 12px;
+  padding: 24px;
   border-radius: 2px;
 }
 

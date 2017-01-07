@@ -24,6 +24,7 @@ html,
 body,
 #app {
   height: 100%;
+  overflow: hidden;
 }
 
 .material-icons {
@@ -177,6 +178,11 @@ input {
 
   pre {
     padding: 12px;
+  }
+
+  hr {
+    border: none;
+    border-top: solid 1px rgba($primary-color, .5);
   }
 }
 

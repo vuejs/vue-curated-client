@@ -1,12 +1,16 @@
 <template>
   <div>
     <div class="fake-header"></div>
-    <transition-group name="fade" mode="in-out">
+    <transition-group name="module-details">
       <div class="module-details" :key="id">
-        <template v-if="data">
+        <template v-if="!loading">
           <section class="header">
             <div class="title">
               <span class="module-name">{{ data.label }}</span>
+            </div>
+
+            <div class="secondary">
+              <span class="category">{{ data.category.label }}</span>
 
               <span class="badges">
                 <span class="badge vue-version" v-for="version of data.vue">
@@ -35,11 +39,13 @@
               </span>
             </div>
 
-            <div class="secondary">
-              <span class="category">{{ data.category.label }}</span>
-              <span class="description">{{ data.details.description }}</span>
-            </div>
+          </section>
 
+          <section class="description">
+            <i class="icon material-icons">assistant</i>
+            <div class="text">
+              {{ data.details.description }}
+            </div>
           </section>
 
           <section class="details-content">
@@ -156,7 +162,7 @@ export default {
   top: 0;
   left: 0;
   right: 0;
-  height: 120px;
+  height: 144px;
   background: $primary-color;
 }
 
@@ -168,6 +174,7 @@ export default {
   bottom: 0;
   overflow-x: hidden;
   overflow-y: auto;
+  background: white;
 }
 
 section {
@@ -178,7 +185,7 @@ section {
 .header {
   background: $primary-color;
   color: white;
-  padding: 12px 24px 24px;
+  padding: 24px;
 
   a {
     color: white;
@@ -189,50 +196,29 @@ section {
   }
 
   .title {
-    display: flex;
-    align-items: center;
     margin-bottom: 24px;
-  }
-
-  .badges {
-    flex: auto 1 1;
-    display: inline-flex;
+    text-align: center;
   }
 
   .secondary {
     display: flex;
-    color: lighten($primary-color, 40%);
+    flex-direction: row;
+    align-items: center;
 
     .category,
-    .description {
-      display: inline-block;
-      box-sizing: border-box;
+    .stats {
+      flex: 100% 1 1;
     }
 
-    .category {
-      padding-right: 12px;
-      flex: auto 1 0;
-      min-width: 50px;
-    }
-
-    .description {
-      font-style: italic;
-      text-align: right;
-      flex: auto 1 1;
-      min-width: 50px;
-      @include ellipsis;
-
-      @media #{$small-screen} {
-        display: none;
-      }
+    .badges {
+      flex: auto 0 0;
     }
   }
 }
 
 .module-name {
-  font-size: 32px;
+  font-size: 42px;
   font-weight: 300;
-  margin-right: 12px;
 }
 
 .badge {
@@ -260,11 +246,12 @@ section {
 
 .stats {
   flex: auto 0 0;
+  text-align: right;
 
   .stat {
     display: inline-block;
-    width: 55px;
     text-align: right;
+    margin-left: 12px;
 
     @media #{$medium-screen} {
       &:not(:first-child) {
@@ -275,7 +262,35 @@ section {
 
 }
 
+section.description {
+  background: $primary-color;
+  color: white;
+  margin: 24px;
+  margin-bottom: 0;
+  border-radius: 2px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  animation: slide-to-bottom .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+
+  .icon {
+    flex: auto 0 0;
+    font-size: 24px;
+    margin-right: 12px;
+    position: relative;
+    top: 1px;
+  }
+
+  .text {
+    flex: auto 1 1;
+  }
+}
+
 .details-content {
+  opacity: 0;
+  animation: slide-to-bottom .3s .15s cubic-bezier(0.0, 0.0, 0.2, 1);
+  animation-fill-mode: forwards;
+
   > div {
     margin-bottom: 24px;
   }
@@ -298,6 +313,41 @@ section {
     &:not(:last-child) {
       margin-right: 12px;
     }
+  }
+}
+
+.times {
+  .time {
+    display: inline-block;
+  }
+}
+
+.module-details-enter-active,
+.module-details-leave-active {
+  transition: opacity .3s linear, transform .3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.module-details-enter,
+.module-details-leave-active {
+  opacity: 0;
+}
+
+.module-details-enter {
+  transform: translateX(-30px);
+}
+
+.module-details-leave-active {
+  transform: translateX(30px);
+}
+
+@keyframes slide-to-bottom {
+  from {
+    transform: translateY(-42px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
   }
 }
 

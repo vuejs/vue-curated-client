@@ -35,10 +35,10 @@ export default {
   computed: {
     input: {
       get () {
-        return this.currentRelease || defaultOption
+        return this.releases.find(r => r.id === this.currentRelease) || defaultOption
       },
       set (val) {
-        this.setRelease(val)
+        this.setRelease(val.id)
       },
     },
 
@@ -50,7 +50,7 @@ export default {
     },
 
     ...mapGetters({
-      currentRelease: 'release',
+      currentRelease: 'releaseId',
     }),
   },
 

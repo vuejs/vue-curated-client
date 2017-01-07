@@ -35,10 +35,10 @@ export default {
   computed: {
     input: {
       get () {
-        return this.currentCategory || defaultOption
+        return this.categories.find(c => c.id === this.currentCategory) || defaultOption
       },
       set (val) {
-        this.setCategory(val)
+        this.setCategory(val.id)
       },
     },
 
@@ -50,7 +50,7 @@ export default {
     },
 
     ...mapGetters({
-      currentCategory: 'category',
+      currentCategory: 'categoryId',
     }),
   },
 

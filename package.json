@@ -5,11 +5,11 @@
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --inline --hot",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
-    "apollo-client": "^0.5.20",
+    "apollo-client": "^0.6.0",
     "marked": "^0.3.6",
     "moment": "^2.17.1",
     "numeral": "^2.0.1",

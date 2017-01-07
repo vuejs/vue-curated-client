@@ -2,7 +2,7 @@
   <div class="main-pane">
     <div class="header">
       <div class="logo">
-        <router-link :to="{ name: 'home' }"><img src="~assets/logo.png" /></router-link>
+        <router-link :to="{ name: 'home' }"><img src="~assets/logo.png" width="32" height="32" /></router-link>
       </div>
 
       <categories class="filter"></categories>
@@ -18,7 +18,7 @@
 
     <div class="modules">
       <transition-group name="module" tag="div" class="modules-list">
-        <module v-for="module of modules" class="module" :key="module.id" :module="module"></module>
+        <module v-for="module of modules" class="module" :key="module.id" :module="module" :class="{active: currentModuleDetailsId === module.id}"></module>
       </transition-group>
 
       <ui-loading-overlay :show="loading"></ui-loading-overlay>
@@ -64,8 +64,8 @@ export default {
       variables () {
         return {
           searchText: this.searchText,
-          category: this.category && this.category.id,
-          release: this.release && this.release.id,
+          category: this.category,
+          release: this.release,
         }
       },
       loadingKey: 'loading',
@@ -73,9 +73,15 @@ export default {
   },
 
   computed: {
+    currentModuleDetailsId () {
+      if (this.$route.matched.some(r => r.name === 'module')) {
+        return this.$route.params.id
+      }
+    },
+
     ...mapGetters({
-      category: 'category',
-      release: 'release',
+      category: 'categoryId',
+      release: 'releaseId',
     }),
   },
 }
