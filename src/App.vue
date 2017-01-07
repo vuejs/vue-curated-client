@@ -179,4 +179,20 @@ input {
     padding: 12px;
   }
 }
+
+.page-content {
+  section {
+    margin: 12px;
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .3s linear;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
 </style>

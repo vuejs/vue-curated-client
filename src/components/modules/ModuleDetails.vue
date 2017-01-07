@@ -1,81 +1,84 @@
 <template>
-  <div class="module-details">
-    <div class="loading" v-if="!data">
-      Loading...
-    </div>
+  <div>
+    <div class="fake-header"></div>
+    <transition-group name="fade" mode="in-out">
+      <div class="module-details" :key="id">
+        <template v-if="data">
+          <section class="header">
+            <div class="title">
+              <span class="module-name">{{ data.label }}</span>
 
-    <template v-else>
-      <section class="header">
-        <div class="title">
-          <span class="module-name">{{ data.label }}</span>
+              <span class="badges">
+                <span class="badge vue-version" v-for="version of data.vue">
+                  <span class="badge-label">vue</span>
+                  {{ version }}
+                </span>
 
-          <span class="badges">
-            <span class="badge vue-version" v-for="version of data.vue">
-              <span class="badge-label">vue</span>
-              {{ version }}
-            </span>
+                <span class="badge module-badge" v-if="data.badge" :class="data.badge">{{ data.badge }}</span>
+              </span>
 
-            <span class="badge module-badge" v-if="data.badge" :class="data.badge">{{ data.badge }}</span>
-          </span>
+              <span class="stats">
+                <a class="stat stars" :href="data.url + '/stargazers'" v-tooltip="'Stars'">
+                  {{ data.details.stargazers_count | shortenNumber }}
+                  <i class="material-icons">star</i>
+                </a>
 
-          <span class="stats">
-            <a class="stat stars" :href="data.url + '/stargazers'" v-tooltip="'Stars'">
-              {{ data.details.stargazers_count | shortenNumber }}
-              <i class="material-icons">star</i>
-            </a>
+                <a class="stat forks" :href="data.url + '/network'" v-tooltip="'Forks'">
+                  {{ data.details.forks_count | shortenNumber }}
+                  <i class="material-icons">call_split</i>
+                </a>
 
-            <a class="stat forks" :href="data.url + '/network'" v-tooltip="'Forks'">
-              {{ data.details.forks_count | shortenNumber }}
-              <i class="material-icons">call_split</i>
-            </a>
+                <a class="stat issues" :href="data.url + '/issues'" v-tooltip="'Open Issues'">
+                  {{ data.details.open_issues_count | shortenNumber }}
+                  <i class="material-icons">error_outline</i>
+                </a>
+              </span>
+            </div>
 
-            <a class="stat issues" :href="data.url + '/issues'" v-tooltip="'Open Issues'">
-              {{ data.details.open_issues_count | shortenNumber }}
-              <i class="material-icons">error_outline</i>
-            </a>
-          </span>
-        </div>
+            <div class="secondary">
+              <span class="category">{{ data.category.label }}</span>
+              <span class="description">{{ data.details.description }}</span>
+            </div>
 
-        <div class="secondary">
-          <span class="category">{{ data.category.label }}</span>
-          <span class="description">{{ data.details.description }}</span>
-        </div>
+          </section>
 
-      </section>
+          <section class="details-content">
+            <div class="links">
+              <a class="open-url" :href="data.url" target="_blank"><i class="material-icons">open_in_new</i> repo</a>
 
-      <section class="details-content">
-        <div class="links">
-          <a class="open-url" :href="data.url" target="_blank"><i class="material-icons">open_in_new</i> repo</a>
+              <a class="open-url" :href="data.url + '/issues'" target="_blank"><i class="material-icons">error_outline</i> issues</a>
 
-          <a class="open-url" :href="data.url + '/issues'" target="_blank"><i class="material-icons">error_outline</i> issues</a>
+              <a class="open-url" v-if="data.details.has_wiki" :href="data.url + '/wiki'" target="_blank"><i class="material-icons">import_contacts</i> wiki</a>
 
-          <a class="open-url" v-if="data.details.has_wiki" :href="data.url + '/wiki'" target="_blank"><i class="material-icons">import_contacts</i> wiki</a>
+              <a class="open-url" v-for="link of data.links" :href="link.url" target="_blank"><i class="material-icons">public</i> {{ link.label }}</a>
+            </div>
 
-          <a class="open-url" v-for="link of data.links" :href="link.url" target="_blank"><i class="material-icons">public</i> {{ link.label }}</a>
-        </div>
+            <div class="times">
 
-        <div class="times">
+              <span class="time info">
+                <i class="material-icons">update</i>
+                <span class="label">updated</span>
+                <span class="value">{{data.details.updated_at | humanDate }}</span>
+              </span>
+              <span class="time info">
+                <i class="material-icons">arrow_upward</i>
+                <span class="label">pushed</span>
+                <span class="value">{{data.details.pushed_at | humanDate }}</span>
+              </span>
+              <span class="time info">
+                <i class="material-icons">access_time</i>
+                <span class="label">created</span>
+                <span class="value">{{data.details.created_at | humanDate }}</span>
+              </span>
+            </div>
 
-          <span class="time info">
-            <i class="material-icons">update</i>
-            <span class="label">updated</span>
-            <span class="value">{{data.details.updated_at | humanDate }}</span>
-          </span>
-          <span class="time info">
-            <i class="material-icons">arrow_upward</i>
-            <span class="label">pushed</span>
-            <span class="value">{{data.details.pushed_at | humanDate }}</span>
-          </span>
-          <span class="time info">
-            <i class="material-icons">access_time</i>
-            <span class="label">created</span>
-            <span class="value">{{data.details.created_at | humanDate }}</span>
-          </span>
-        </div>
+            <readme :id="id"></readme>
+          </section>
+        </template>
 
-        <readme :id="id"></readme>
-      </section>
-    </template>
+        <ui-loading-overlay :show="loading"></ui-loading-overlay>
+      </div>
+    </transition-group>
   </div>
 </template>
 
@@ -124,6 +127,12 @@ export default {
     },
   },
 
+  data () {
+    return {
+      loading: 0,
+    }
+  },
+
   apollo: {
     data: {
       query: detailsQuery,
@@ -133,6 +142,7 @@ export default {
         }
       },
       update: ({ module }) => module,
+      loadingKey: 'loading',
     },
   },
 }
@@ -141,7 +151,27 @@ export default {
 <style lang="scss" scoped>
 @import "~style/imports";
 
+.fake-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: $primary-color;
+}
+
+.module-details {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 section {
+  margin: 0;
   padding: 24px;
 }
 
@@ -161,6 +191,7 @@ section {
   .title {
     display: flex;
     align-items: center;
+    margin-bottom: 24px;
   }
 
   .badges {

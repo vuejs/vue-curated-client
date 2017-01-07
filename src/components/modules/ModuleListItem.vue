@@ -6,6 +6,9 @@
           <img :src="data.details.owner.avatar_url" />
         </a>
       </div>
+      <div class="avatar" v-else>
+        <div class="empty-avatar"></div>
+      </div>
 
       <div class="content">
         <div class="general">
@@ -114,10 +117,8 @@ export default {
 
 .module-list-item {
   cursor: default;
-
-  &:not(:last-child) {
-    border-bottom: solid 1px darken(white, 5%);
-  }
+  position: relative;
+  height: 70px;
 
   .module-header {
     padding: 12px;
@@ -125,6 +126,7 @@ export default {
     flex-direction: row;
     align-items: center;
     transition: background .15s;
+    border-radius: 2px;
 
     &:hover {
       background: rgba($primary-color, .1);
@@ -140,6 +142,13 @@ export default {
     img {
       max-width: 32px;
       max-height: 32px;
+      border-radius: 3px;
+    }
+
+    .empty-avatar {
+      background: white;
+      width: 32px;
+      height: 32px;
       border-radius: 3px;
     }
   }

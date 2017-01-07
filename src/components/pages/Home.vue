@@ -1,5 +1,5 @@
 <template>
-  <div class="home-page">
+  <div class="home-page page-content">
 
     <section class="hero">
 
@@ -89,10 +89,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "~style/imports";
-
-section {
-  margin: 12px;
-}
 
 h1 {
   margin: 42px 0 12px;

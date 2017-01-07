@@ -1,5 +1,5 @@
 <template>
-  <div class="module-list">
+  <div class="main-pane">
     <div class="header">
       <div class="logo">
         <router-link :to="{ name: 'home' }"><img src="~assets/logo.png" /></router-link>
@@ -17,7 +17,11 @@
     </div>
 
     <div class="modules">
-      <module v-for="module of modules" :module="module"></module>
+      <transition-group name="module" tag="div" class="modules-list">
+        <module v-for="module of modules" class="module" :key="module.id" :module="module"></module>
+      </transition-group>
+
+      <ui-loading-overlay :show="loading"></ui-loading-overlay>
     </div>
   </div>
 </template>
@@ -50,6 +54,7 @@ export default {
     return {
       modules: [],
       searchText: '',
+      loading: 0,
     }
   },
 
@@ -63,6 +68,7 @@ export default {
           release: this.release && this.release.id,
         }
       },
+      loadingKey: 'loading',
     },
   },
 
@@ -78,7 +84,7 @@ export default {
 <style lang="scss" scoped>
 @import "~style/imports";
 
-.module-list {
+.main-pane {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -110,5 +116,20 @@ export default {
   flex: auto 1 1;
   overflow-x: hidden;
   overflow-y: auto;
+  position: relative;
+}
+
+.module {
+  transition: all .5s;
+}
+
+.module-enter,
+.module-leave-active {
+  opacity: 0;
+  transform: scale(.9);
+}
+
+.module-leave-active {
+  margin-bottom: -70px;
 }
 </style>

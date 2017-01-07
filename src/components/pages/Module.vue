@@ -1,5 +1,5 @@
 <template>
-  <module-details :id="$route.params.id"></module-details>
+  <module-details class="page-content" :id="$route.params.id"></module-details>
 </template>
 
 <script>
