@@ -9,6 +9,9 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "start": "serve -p 80 -s"
   },
+  "engines": {
+    "node": "6.9.1"
+  },
   "dependencies": {
     "apollo-client": "^0.6.0",
     "marked": "^0.3.6",
@@ -38,6 +41,8 @@
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^2.0.1",
     "file-loader": "^0.9.0",
+    "node-sass": "^4.1.1",
+    "sass-loader": "^4.1.1",
     "vue-loader": "^10.0.0",
     "vue-template-compiler": "^2.1.0",
     "webpack": "^2.1.0-beta.25",
