@@ -94,6 +94,7 @@ export default {
         }
       },
       update: ({ module }) => module,
+      returnPartialData: true,
     },
   },
 
