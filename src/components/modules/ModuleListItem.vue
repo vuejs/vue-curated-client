@@ -112,7 +112,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="stylus" scoped>
 @import "~style/imports";
 
 .module-list-item {
@@ -165,7 +165,7 @@ export default {
 
   .label {
     flex: 100% 1 1;
-    @include ellipsis;
+    ellipsis();
   }
 
   .module-label {
@@ -224,7 +224,7 @@ export default {
       width: 55px;
       text-align: right;
 
-      @media #{$medium-screen} {
+      @media ({$medium-screen}) {
         &:not(:first-child) {
           display: none;
         }
@@ -254,9 +254,9 @@ export default {
       flex: auto 1 1;
       min-width: 50px;
       max-width: 200px;
-      @include ellipsis;
+      ellipsis();
 
-      @media #{$small-screen} {
+      @media ({$small-screen}) {
         display: none;
       }
     }

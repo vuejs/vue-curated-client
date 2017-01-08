@@ -87,7 +87,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="stylus" scoped>
 @import "~style/imports";
 
 h1 {
@@ -169,7 +169,7 @@ h1 {
 }
 
 .avatar {
-  $size: 32px;
+  $size =32px;
   width: $size;
   height: $size;
   border-radius: 3px;

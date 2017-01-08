@@ -10,7 +10,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="stylus">
 @import "~style/imports";
 
 body {
@@ -43,7 +43,7 @@ a {
   text-decoration: none;
 
   &:hover {
-    color: lighten($primary-color, 10%);
+    color: lighten($primary-color, 30%);
   }
 }
 

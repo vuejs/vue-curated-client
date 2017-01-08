@@ -2,7 +2,7 @@
   <div class="spinner"></div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="stylus" scoped>
 @import "~style/imports";
 
 .spinner {

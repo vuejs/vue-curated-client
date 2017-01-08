@@ -149,13 +149,14 @@ export default {
         }
       },
       update: ({ module }) => module,
+      returnPartialData: true,
       loadingKey: 'loading',
     },
   },
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="stylus" scoped>
 @import "~style/imports";
 
 .fake-header {
@@ -192,7 +193,7 @@ section {
     color: white;
 
     &:hover {
-      color: lighten($primary-color, 40%);
+      color: lighten($primary-color, 70%);
     }
   }
 
@@ -254,7 +255,7 @@ section {
     text-align: right;
     margin-left: 12px;
 
-    @media #{$medium-screen} {
+    @media ({$medium-screen}) {
       &:not(:first-child) {
         display: none;
       }

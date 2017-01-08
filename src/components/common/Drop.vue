@@ -196,7 +196,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="stylus">
 .drop-element {
   position: absolute;
   visibility: hidden;
