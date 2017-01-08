@@ -102,6 +102,12 @@ input {
   }
 }
 
+.empty {
+  color: $md-grey-400;
+  text-align: center;
+  padding: 24px;
+}
+
 .tooltip {
   display: none;
   opacity: 0;

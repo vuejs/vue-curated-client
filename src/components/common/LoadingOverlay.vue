@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div class="ui-loading-overlay" v-if="show">
+    <div class="ui-loading-overlay" v-if="show" :class="{'no-background': noBackground}">
       <ui-loading-animation></ui-loading-animation>
     </div>
   </transition>
@@ -10,6 +10,10 @@
 export default {
   props: {
     show: {
+      default: false,
+    },
+    noBackground: {
+      type: Boolean,
       default: false,
     },
   },
@@ -27,5 +31,9 @@ export default {
   align-items: center;
   justify-content: center;
   background: rgba(white, .75);
+
+  &.no-background {
+    background: none !important;
+  }
 }
 </style>

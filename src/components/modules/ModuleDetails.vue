@@ -136,6 +136,7 @@ export default {
   data () {
     return {
       loading: 0,
+      data: null,
     }
   },
 
@@ -349,6 +350,12 @@ section.description {
     transform: none;
     opacity: 1;
   }
+}
+
+.loading {
+  position: absolute;
+  left: 24px;
+  right: 24px;
 }
 
 </style>

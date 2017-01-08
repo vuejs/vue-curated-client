@@ -1,6 +1,11 @@
 <template>
   <div class="readme" :class="cssClasses">
-    <div class="content markdown" v-if="readme" v-html="renderedHTML"></div>
+    <transition name="fade" mode="out-in">
+      <div class="content markdown" v-if="ready" key="html" v-html="renderedHTML"></div>
+      <div class="loading" v-else key="loading">
+        <ui-loading-animation></ui-loading-animation>
+      </div>
+    </transition>
 
     <div class="actions">
       <button @click="showFull = !showFull">{{ showFull ? 'Hide full Readme' : 'Show full Readme' }}</button>
@@ -12,8 +17,8 @@
 import gql from 'graphql-tag'
 import marked from 'marked'
 
-const readmeQuery = gql`query readme($id: String!) {
-  module(id: $id) {
+const readmeQuery = gql`query details($id: String!) {
+  module (id: $id) {
     readme {
       content
     }
@@ -24,13 +29,14 @@ export default {
   props: {
     id: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
 
   data () {
     return {
-      showFull: false
+      showFull: false,
+      loading: 0,
     }
   },
 
@@ -39,32 +45,38 @@ export default {
       query: readmeQuery,
       variables () {
         return {
-          id: this.id
+          id: this.id,
         }
       },
-      update: ({ module }) => module.readme
-    }
+      update: ({ module }) => module.readme,
+      loadingKey: 'loading',
+      returnPartialData: true,
+    },
   },
 
   computed: {
     cssClasses () {
       return {
-        preview: !this.showFull
+        preview: !this.showFull,
       }
+    },
+
+    ready () {
+      return this.readme
     },
 
     renderedHTML () {
       if (this.readme) {
         return marked(this.readme.content)
       }
-    }
+    },
   },
 
   watch: {
     id () {
       this.showFull = false
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -104,5 +116,10 @@ export default {
 .actions {
   margin-top: 12px;
   text-align: center;
+}
+
+.loading {
+  width: 134px;
+  margin: auto;
 }
 </style>

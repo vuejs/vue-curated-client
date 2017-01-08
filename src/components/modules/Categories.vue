@@ -8,7 +8,7 @@
 import gql from 'graphql-tag'
 import { mapGetters, mapMutations } from 'vuex'
 
-const categoriesQuery = gql`query {
+const categoriesQuery = gql`query categories {
   moduleCategories {
     id
     label

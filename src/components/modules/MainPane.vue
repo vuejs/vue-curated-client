@@ -1,5 +1,5 @@
 <template>
-  <div class="main-pane">
+  <div class="main-pane" :class="{loading: loading}">
     <div class="header">
       <div class="logo">
         <router-link :to="{ name: 'home' }"><img src="~assets/logo.png" width="32" height="32" /></router-link>
@@ -18,10 +18,14 @@
 
     <div class="modules">
       <transition-group name="module" tag="div" class="modules-list">
-        <module v-for="module of modules" class="module" :key="module.id" :module="module" :class="{active: currentModuleDetailsId === module.id}"></module>
+        <module v-for="module of modules" v-if="module" class="module" :key="module.id" :module="module" :class="{active: currentModuleDetailsId === module.id}"></module>
       </transition-group>
 
-      <ui-loading-overlay :show="loading"></ui-loading-overlay>
+      <ui-loading-overlay :show="loading" no-background></ui-loading-overlay>
+
+      <div class="empty" v-if="!loading && modules.length === 0">
+        <i class="material-icons">cake</i> No package found.
+      </div>
     </div>
   </div>
 </template>
@@ -68,7 +72,14 @@ export default {
           release: this.release,
         }
       },
+      update: data => data ? data.modules : [],
+      returnPartialData: true,
       loadingKey: 'loading',
+      throttle: {
+        wait: 800,
+        leading: true,
+        trailing: true,
+      },
     },
   },
 
@@ -137,5 +148,13 @@ export default {
 
 .module-leave-active {
   margin-bottom: -70px;
+}
+
+.main-pane {
+  &.loading {
+    .modules-list {
+      opacity: .5;
+    }
+  }
 }
 </style>

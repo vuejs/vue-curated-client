@@ -8,7 +8,7 @@
 import gql from 'graphql-tag'
 import { mapGetters, mapMutations } from 'vuex'
 
-const releasesQuery = gql`query {
+const releasesQuery = gql`query releases {
   vueReleases {
     id
     label
