@@ -5,40 +5,45 @@
       <div class="module-details" :key="id">
         <template v-if="!loading">
           <section class="header">
-            <div class="title">
-              <span class="module-name">{{ data.label }}</span>
-            </div>
 
-            <div class="secondary">
-              <span class="category">
-                <a v-tooltip="'Category'" @click="changeCategory">{{ data.category.label }}</a>
-              </span>
+            <downloads-graph class="graph" :module-id="id"></downloads-graph>
 
-              <span class="badges">
-                <span class="badge vue-version" v-for="version of data.vue">
-                  <span class="badge-label">vue</span>
-                  {{ version }}
+            <div class="header-content">
+              <div class="title">
+                <span class="module-name">{{ data.label }}</span>
+              </div>
+
+              <div class="secondary">
+                <span class="category">
+                  <a v-tooltip="'Category'" @click="changeCategory">{{ data.category.label }}</a>
                 </span>
 
-                <span class="badge module-badge" v-if="data.badge" :class="data.badge">{{ data.badge }}</span>
-              </span>
+                <span class="badges">
+                  <span class="badge vue-version" v-for="version of data.vue">
+                    <span class="badge-label">vue</span>
+                    {{ version }}
+                  </span>
 
-              <span class="stats">
-                <a class="stat stars" :href="data.url + '/stargazers'" v-tooltip="'Stars'">
-                  {{ data.details.stargazers_count | shortenNumber }}
-                  <i class="material-icons">star</i>
-                </a>
+                  <span class="badge module-badge" v-if="data.badge" :class="data.badge">{{ data.badge }}</span>
+                </span>
 
-                <a class="stat forks" :href="data.url + '/network'" v-tooltip="'Forks'">
-                  {{ data.details.forks_count | shortenNumber }}
-                  <i class="material-icons">call_split</i>
-                </a>
+                <span class="stats">
+                  <a class="stat stars" :href="data.url + '/stargazers'" v-tooltip="'Stars'">
+                    {{ data.details.stargazers_count | shortenNumber }}
+                    <i class="material-icons">star</i>
+                  </a>
 
-                <a class="stat issues" :href="data.url + '/issues'" v-tooltip="'Open Issues'">
-                  {{ data.details.open_issues_count | shortenNumber }}
-                  <i class="material-icons">error_outline</i>
-                </a>
-              </span>
+                  <a class="stat forks" :href="data.url + '/network'" v-tooltip="'Forks'">
+                    {{ data.details.forks_count | shortenNumber }}
+                    <i class="material-icons">call_split</i>
+                  </a>
+
+                  <a class="stat issues" :href="data.url + '/issues'" v-tooltip="'Open Issues'">
+                    {{ data.details.open_issues_count | shortenNumber }}
+                    <i class="material-icons">error_outline</i>
+                  </a>
+                </span>
+              </div>
             </div>
 
           </section>
@@ -135,10 +140,12 @@ const detailsQuery = gql`query details($id: String!) {
 }`
 
 import Readme from './ModuleReadme.vue'
+import DownloadsGraph from './DownloadsGraph.vue'
 
 export default {
   components: {
     Readme,
+    DownloadsGraph,
   },
 
   props: {
@@ -186,13 +193,17 @@ export default {
 <style lang="stylus" scoped>
 @import "~style/imports";
 
+.fake-header,
+section.header {
+  background: $primary-color;
+}
+
 .fake-header {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 144px;
-  background: $primary-color;
 }
 
 .module-details {
@@ -224,11 +235,11 @@ section {
 }
 
 section.header {
-  background: $primary-color;
   color: white;
   margin: 0 0 24px 0;
   padding: 24px 48px;
   border: none;
+  position: relative;
 
   a {
     color: white;
@@ -256,6 +267,20 @@ section.header {
     .badges {
       flex: auto 0 0;
     }
+  }
+
+  .graph {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+  }
+
+  .header-content {
+    position: relative;
+    z-index: 1;
   }
 }
 
