@@ -5,33 +5,11 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
 import { mapGetters, mapMutations } from 'vuex'
-
-const releasesQuery = gql`query releases {
-  vue_releases {
-    id
-    label
-  }
-}`
 
 const defaultOption = { id: null, label: 'All Releases' }
 
 export default {
-
-  data () {
-    return {
-      releases: [],
-    }
-  },
-
-  apollo: {
-    releases: {
-      query: releasesQuery,
-      update: ({ vue_releases }) => vue_releases,
-    },
-  },
-
   computed: {
     input: {
       get () {
@@ -50,6 +28,7 @@ export default {
     },
 
     ...mapGetters({
+      releases: 'releases',
       currentRelease: 'releaseId',
     }),
   },

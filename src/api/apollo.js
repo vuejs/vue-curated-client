@@ -3,7 +3,7 @@ import ApolloClient, { createNetworkInterface } from 'apollo-client'
 import VueApollo from 'vue-apollo'
 
 // Create the apollo client
-const apolloClient = new ApolloClient({
+export const apolloClient = new ApolloClient({
   networkInterface: createNetworkInterface({
     uri: process.env.GRAPHQL_URL,
     transportBatching: true,

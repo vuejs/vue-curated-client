@@ -5,33 +5,11 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
 import { mapGetters, mapMutations } from 'vuex'
-
-const categoriesQuery = gql`query categories {
-  module_categories {
-    id
-    label
-  }
-}`
 
 const defaultOption = { id: null, label: 'All Categories' }
 
 export default {
-
-  data () {
-    return {
-      categories: [],
-    }
-  },
-
-  apollo: {
-    categories: {
-      query: categoriesQuery,
-      update: ({ module_categories }) => module_categories,
-    },
-  },
-
   computed: {
     input: {
       get () {
@@ -50,6 +28,7 @@ export default {
     },
 
     ...mapGetters({
+      categories: 'categories',
       currentCategory: 'categoryId',
     }),
   },

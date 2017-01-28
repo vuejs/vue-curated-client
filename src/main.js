@@ -15,6 +15,7 @@ import './components/common'
 
 import router from './router'
 import store from './store'
+import initStore from './store/init'
 
 /* eslint-disable no-new */
 new Vue({
@@ -22,4 +23,7 @@ new Vue({
   store,
   el: '#app',
   render: h => h(App),
+  mounted () {
+    initStore(this.$store)
+  },
 })

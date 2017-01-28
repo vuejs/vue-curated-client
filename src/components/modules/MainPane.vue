@@ -17,15 +17,15 @@
     </div>
 
     <div class="modules">
+      <div class="empty" v-if="!loading && displayModules.length === 0">
+        <i class="material-icons">cake</i> No package found.
+      </div>
+
       <transition-group name="module" tag="div" class="modules-list">
         <module v-for="module of displayModules" v-if="module" class="module" :key="module.id" :module="module" :class="{active: currentModuleDetailsId === module.id}"></module>
       </transition-group>
 
       <ui-loading-overlay :show="loading" no-background></ui-loading-overlay>
-
-      <div class="empty" v-if="!loading && modules.length === 0">
-        <i class="material-icons">cake</i> No package found.
-      </div>
     </div>
   </div>
 </template>
@@ -98,6 +98,9 @@ export default {
       update: data => data ? data.modules : [],
       returnPartialData: true,
       loadingKey: 'loading',
+      skip () {
+        return this.releases.length === 0
+      },
     },
   },
 
@@ -132,6 +135,7 @@ export default {
 
     ...mapGetters({
       category: 'categoryId',
+      releases: 'releases',
       release: 'releaseId',
     }),
   },
