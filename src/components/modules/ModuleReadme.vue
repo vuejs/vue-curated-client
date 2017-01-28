@@ -83,13 +83,6 @@ export default {
 <style lang="stylus" scoped>
 @import "~style/imports";
 
-.readme {
-  border: solid 1px darken(white, 5%);
-  margin: 24px 0;
-  padding: 24px;
-  border-radius: 2px;
-}
-
 .preview {
   .content {
     max-height: 300px;

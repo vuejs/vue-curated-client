@@ -1,9 +1,9 @@
 <template>
   <div class="module-list-item">
     <div class="module-header" @click="handleHeaderClick">
-      <div class="avatar" v-if="data" v-tooltip="data.details.owner.login">
-        <a :href="data.details.owner.html_url" target="_blank">
-          <img :src="data.details.owner.avatar_url" />
+      <div class="avatar" v-if="details" v-tooltip="details.owner.login">
+        <a :href="details.owner.html_url" target="_blank">
+          <img :src="details.owner.avatar_url" />
         </a>
       </div>
       <div class="avatar" v-else>
@@ -21,30 +21,30 @@
 
             <span class="badge module-badge" v-if="module.badge" :class="module.badge">{{ module.badge }}</span>
 
-            <a class="open-url" :href="module.url" target="_blank"><i class="material-icons">open_in_new</i></a>
+            <a class="open-url" :href="module.url" target="_blank" v-tooltip="'Open repository'"><i class="material-icons">open_in_new</i></a>
           </span>
 
-          <span class="details" v-if="data">
+          <span class="details" v-if="details">
             <span class="stat stars" v-tooltip="'Stars'">
-              {{ data.details.stargazers_count | shortenNumber }}
+              {{ details.stargazers_count | shortenNumber }}
               <i class="material-icons">star</i>
             </span>
 
             <span class="stat forks" v-tooltip="'Forks'">
-              {{ data.details.forks_count | shortenNumber }}
+              {{ details.forks_count | shortenNumber }}
               <i class="material-icons">call_split</i>
             </span>
 
             <span class="stat issues" v-tooltip="'Open Issues'">
-              {{ data.details.open_issues_count | shortenNumber }}
+              {{ details.open_issues_count | shortenNumber }}
               <i class="material-icons">error_outline</i>
             </span>
           </span>
         </div>
 
-        <div class="secondary" v-if="data">
-          <span class="category">{{ data.category.label }}</span>
-          <span class="description">{{ data.details.description }}</span>
+        <div class="secondary">
+          <span class="category">{{ module.category.label }}</span>
+          <span class="description" v-if="details">{{ details.description }}</span>
         </div>
       </div>
     </div>
@@ -52,32 +52,6 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
-import { moduleFields } from 'api/data'
-
-const detailsQuery = gql`query details($id: String!) {
-  module(id: $id) {
-    ${moduleFields}
-    details {
-      name
-      description
-      forks_count
-      stargazers_count
-      forks_count
-      open_issues_count
-      owner {
-        login
-        avatar_url
-        html_url
-      }
-    }
-    category {
-      id
-      label
-    }
-  }
-}`
-
 export default {
   props: {
     module: {
@@ -85,16 +59,9 @@ export default {
     },
   },
 
-  apollo: {
-    data: {
-      query: detailsQuery,
-      variables () {
-        return {
-          id: this.module.id,
-        }
-      },
-      update: ({ module }) => module,
-      returnPartialData: true,
+  computed: {
+    details () {
+      return this.module.details
     },
   },
 
@@ -120,6 +87,7 @@ export default {
   cursor: default;
   position: relative;
   height: 90px;
+  box-sizing: border-box;
 
   .module-header {
     padding: 22px 12px;

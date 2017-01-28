@@ -10,7 +10,9 @@
             </div>
 
             <div class="secondary">
-              <span class="category">{{ data.category.label }}</span>
+              <span class="category">
+                <a v-tooltip="'Category'" @click="changeCategory">{{ data.category.label }}</a>
+              </span>
 
               <span class="badges">
                 <span class="badge vue-version" v-for="version of data.vue">
@@ -48,38 +50,41 @@
             </div>
           </section>
 
-          <section class="details-content">
-            <div class="links">
-              <a class="open-url" :href="data.url" target="_blank"><i class="material-icons">open_in_new</i> repo</a>
+          <div class="details-content">
+            <section class="general-info">
+              <div id="links" class="links">
+                <a class="open-url" :href="data.url" target="_blank"><i class="material-icons">open_in_new</i> repo</a>
 
-              <a class="open-url" :href="data.url + '/issues'" target="_blank"><i class="material-icons">error_outline</i> issues</a>
+                <a class="open-url" :href="data.url + '/issues'" target="_blank"><i class="material-icons">error_outline</i> issues</a>
 
-              <a class="open-url" v-if="data.details.has_wiki" :href="data.url + '/wiki'" target="_blank"><i class="material-icons">import_contacts</i> wiki</a>
+                <a class="open-url" v-if="data.details.has_wiki" :href="data.url + '/wiki'" target="_blank"><i class="material-icons">import_contacts</i> wiki</a>
 
-              <a class="open-url" v-for="link of data.links" :href="link.url" target="_blank"><i class="material-icons">public</i> {{ link.label }}</a>
-            </div>
+                <a class="open-url" v-for="link of data.links" :href="link.url" target="_blank"><i class="material-icons">public</i> {{ link.label }}</a>
+              </div>
 
-            <div class="times">
+              <div id="times" class="times">
+                <span class="time info" v-tooltip="humanDate(data.details.updated_at)">
+                  <i class="material-icons">update</i>
+                  <span class="label">updated</span>
+                  <span class="value">{{ data.details.updated_at | fromNow }}</span>
+                </span>
+                <span class="time info" v-tooltip="humanDate(data.details.pushed_at)">
+                  <i class="material-icons">arrow_upward</i>
+                  <span class="label">pushed</span>
+                  <span class="value">{{ data.details.pushed_at | fromNow }}</span>
+                </span>
+                <span class="time info" v-tooltip="humanDate(data.details.created_at)">
+                  <i class="material-icons">access_time</i>
+                  <span class="label">created</span>
+                  <span class="value">{{ data.details.created_at | fromNow }}</span>
+                </span>
+              </div>
+            </section>
 
-              <span class="time info">
-                <i class="material-icons">update</i>
-                <span class="label">updated</span>
-                <span class="value">{{data.details.updated_at | humanDate }}</span>
-              </span>
-              <span class="time info">
-                <i class="material-icons">arrow_upward</i>
-                <span class="label">pushed</span>
-                <span class="value">{{data.details.pushed_at | humanDate }}</span>
-              </span>
-              <span class="time info">
-                <i class="material-icons">access_time</i>
-                <span class="label">created</span>
-                <span class="value">{{data.details.created_at | humanDate }}</span>
-              </span>
-            </div>
-
-            <readme :id="id"></readme>
-          </section>
+            <section id="readme">
+              <readme :id="id"></readme>
+            </section>
+          </div>
         </template>
 
         <ui-loading-overlay :show="loading"></ui-loading-overlay>
@@ -90,11 +95,21 @@
 
 <script>
 import gql from 'graphql-tag'
-import { moduleFields } from 'api/data'
+import { mapMutations } from 'vuex'
+import { humanDate } from 'filters'
 
 const detailsQuery = gql`query details($id: String!) {
   module(id: $id) {
-    ${moduleFields}
+    id
+    label
+    url
+    vue
+    links {
+      url
+      label
+    }
+    status
+    badge
     details {
       name
       description
@@ -119,7 +134,7 @@ const detailsQuery = gql`query details($id: String!) {
   }
 }`
 
-import Readme from './Readme.vue'
+import Readme from './ModuleReadme.vue'
 
 export default {
   components: {
@@ -153,6 +168,18 @@ export default {
       loadingKey: 'loading',
     },
   },
+
+  methods: {
+    changeCategory () {
+      this.setCategory(this.data.category.id)
+    },
+
+    humanDate,
+
+    ...mapMutations({
+      setCategory: 'set_category',
+    }),
+  },
 }
 </script>
 
@@ -180,14 +207,28 @@ export default {
 }
 
 section {
-  margin: 0;
+  border: solid 1px darken(white, 5%);
+  margin: 24px;
   padding: 24px;
+  border-radius: 2px;
+
+  .info {
+    &:not(:last-child) {
+      margin-right: 6px;
+    }
+
+    .label {
+      color: $md-grey-500;
+    }
+  }
 }
 
-.header {
+section.header {
   background: $primary-color;
   color: white;
-  padding: 24px;
+  margin: 0 0 24px 0;
+  padding: 24px 48px;
+  border: none;
 
   a {
     color: white;
@@ -292,19 +333,11 @@ section.description {
   opacity: 0;
   animation: slide-to-bottom .3s .15s cubic-bezier(0.0, 0.0, 0.2, 1);
   animation-fill-mode: forwards;
+}
 
-  > div {
+section.general-info {
+  > div:not(:last-child) {
     margin-bottom: 24px;
-  }
-
-  .info {
-    &:not(:last-child) {
-      margin-right: 6px;
-    }
-
-    .label {
-      color: $md-grey-500;
-    }
   }
 }
 

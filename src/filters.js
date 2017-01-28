@@ -15,7 +15,14 @@ export function markdown (value) {
   return marked(value)
 }
 
+export function fromNow (value) {
+  return moment(value).fromNow()
+}
+
+export function date (value) {
+  return moment(value).format('L')
+}
+
 export function humanDate (value) {
-  const m = moment(value)
-  return m.fromNow()
+  return moment(value).format('L')
 }

@@ -5,8 +5,8 @@
         <router-link :to="{ name: 'home' }"><img src="~assets/logo.png" width="32" height="32" /></router-link>
       </div>
 
-      <categories class="filter"></categories>
       <releases class="filter"></releases>
+      <categories class="filter"></categories>
     </div>
 
     <div class="toolbar">
@@ -18,7 +18,7 @@
 
     <div class="modules">
       <transition-group name="module" tag="div" class="modules-list">
-        <module v-for="module of modules" v-if="module" class="module" :key="module.id" :module="module" :class="{active: currentModuleDetailsId === module.id}"></module>
+        <module v-for="module of displayModules" v-if="module" class="module" :key="module.id" :module="module" :class="{active: currentModuleDetailsId === module.id}"></module>
       </transition-group>
 
       <ui-loading-overlay :show="loading" no-background></ui-loading-overlay>
@@ -33,15 +33,40 @@
 <script>
 import gql from 'graphql-tag'
 import { mapGetters } from 'vuex'
-import { moduleFields } from 'api/data'
+import { search } from 'utils/search'
 
 import Module from './ModuleListItem.vue'
 import Categories from './Categories.vue'
 import Releases from './Releases.vue'
 
-const moduleQuery = gql`query modules ($searchText: String, $category: String, $release: String) {
-  modules (searchText: $searchText, category: $category, release: $release) {
-    ${moduleFields}
+const moduleQuery = gql`query modules ($release: String) {
+  modules (release: $release) {
+    id
+    label
+    url
+    vue
+    links {
+      url
+      label
+    }
+    status
+    badge
+    category {
+      id
+      label
+    }
+    details {
+      description
+      forks_count
+      stargazers_count
+      forks_count
+      open_issues_count
+      owner {
+        login
+        avatar_url
+        html_url
+      }
+    }
   }
 }`
 
@@ -67,19 +92,12 @@ export default {
       query: moduleQuery,
       variables () {
         return {
-          searchText: this.searchText,
-          category: this.category,
           release: this.release,
         }
       },
       update: data => data ? data.modules : [],
       returnPartialData: true,
       loadingKey: 'loading',
-      throttle: {
-        wait: 800,
-        leading: true,
-        trailing: true,
-      },
     },
   },
 
@@ -88,6 +106,28 @@ export default {
       if (this.$route.matched.some(r => r.name === 'module')) {
         return this.$route.params.id
       }
+    },
+
+    filteredModules () {
+      let list = this.modules
+
+      if (this.category) {
+        list = list.filter(module => module.category.id === this.category)
+      }
+
+      if (this.searchText) {
+        list = search(list, this.searchText, [
+          { field: item => item.id, weight: 2 },
+          { field: item => item.category.label, weight: 1 },
+          { field: item => item.details.description, weight: 1 },
+        ])
+      }
+
+      return list
+    },
+
+    displayModules () {
+      return this.filteredModules // .sort((a, b) => a.label < b.label ? -1 : 1)
     },
 
     ...mapGetters({
@@ -137,17 +177,16 @@ export default {
 }
 
 .module {
-  transition: all .5s;
+  transition: all .5s, opacity .3s;
 }
 
 .module-enter,
 .module-leave-active {
   opacity: 0;
-  transform: scale(.9);
 }
 
 .module-leave-active {
-  margin-bottom: -70px;
+  margin-bottom: -90px;
 }
 
 .main-pane {

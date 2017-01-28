@@ -9,7 +9,7 @@ import gql from 'graphql-tag'
 import { mapGetters, mapMutations } from 'vuex'
 
 const releasesQuery = gql`query releases {
-  vueReleases {
+  vue_releases {
     id
     label
   }
@@ -28,7 +28,7 @@ export default {
   apollo: {
     releases: {
       query: releasesQuery,
-      update: ({ vueReleases }) => vueReleases,
+      update: ({ vue_releases }) => vue_releases,
     },
   },
 

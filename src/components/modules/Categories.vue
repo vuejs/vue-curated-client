@@ -9,7 +9,7 @@ import gql from 'graphql-tag'
 import { mapGetters, mapMutations } from 'vuex'
 
 const categoriesQuery = gql`query categories {
-  moduleCategories {
+  module_categories {
     id
     label
   }
@@ -28,7 +28,7 @@ export default {
   apollo: {
     categories: {
       query: categoriesQuery,
-      update: ({ moduleCategories }) => moduleCategories,
+      update: ({ module_categories }) => module_categories,
     },
   },
 
