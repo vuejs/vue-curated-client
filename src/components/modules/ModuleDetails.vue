@@ -427,6 +427,26 @@ section.general-info {
       margin-right: 12px;
     }
   }
+
+  @media ({$small-screen}) {
+    margin: -12px;
+    margin-bottom: 12px !important;
+    h-box();
+    flex-wrap: wrap;
+
+    a {
+      flex: calc(33.33% - 24px) 0 0;
+      padding: 12px;
+      margin: 12px !important;
+      box-sizing: border-box;
+      text-align: center;
+
+      i {
+        display: block;
+        margin: auto;
+      }
+    }
+  }
 }
 
 .times {
