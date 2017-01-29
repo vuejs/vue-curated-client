@@ -85,7 +85,6 @@ input {
     position: absolute;
     top: 14px;
     left: 14px;
-    z-index: 1;
     font-size: 20px;
   }
 }
@@ -210,6 +209,14 @@ input {
 
   &:not(:last-child) {
     margin-right: 4px;
+  }
+}
+
+// Mobile
+
+@media ({$not-small-screen}) {
+  .mobile-only {
+    display: none;
   }
 }
 

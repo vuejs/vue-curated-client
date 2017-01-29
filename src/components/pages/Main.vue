@@ -47,9 +47,12 @@ export default {
   flex: auto 1 1;
   width: 60%;
   max-width: 1000px;
-  overflow-x: hidden;
-  overflow-y: auto;
   position: relative;
+
+  .page-content {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
 }
 
 @media (min-width: 1700px) {
@@ -64,6 +67,29 @@ export default {
 
   .page-wrapper {
     border-right: solid 1px darken(white, 5%);
+  }
+}
+
+@media ({$small-screen}) {
+  .page {
+    display: block;
+  }
+
+  .left-pane {
+    width: 100%;
+  }
+
+  .page-wrapper {
+    position: static;
+  }
+
+  .page-content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
   }
 }
 </style>

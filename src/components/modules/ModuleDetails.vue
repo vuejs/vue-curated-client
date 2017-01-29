@@ -9,6 +9,11 @@
             <downloads-graph class="header-graph" :module-id="id"></downloads-graph>
 
             <div class="header-content">
+
+              <div class="mobile-only toolbar">
+                <router-link :to="{ name: 'home' }"><i class="material-icons">arrow_back</i></router-link>
+              </div>
+
               <div class="title">
                 <span class="module-name">{{ data.label }}</span>
               </div>
@@ -193,6 +198,9 @@ export default {
   methods: {
     changeCategory () {
       this.setCategory(this.data.category.id)
+      if (window.innerWidth <= 800) {
+        this.$router.push({ name: 'home' })
+      }
     },
 
     humanDate,
@@ -260,6 +268,10 @@ section.header {
   position: relative;
   border-radius: 0;
 
+  @media ({$small-screen}) {
+    padding: 24px;
+  }
+
   a {
     color: white;
 
@@ -302,11 +314,27 @@ section.header {
     position: relative;
     z-index: 1;
   }
+
+  .toolbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 24px;
+
+    a {
+      color: white;
+    }
+  }
 }
 
 .module-name {
   font-size: 42px;
   font-weight: 300;
+
+  @media ({$small-screen}) {
+    font-size: 24px;
+    font-weight: normal;
+  }
 }
 
 .vue-version {

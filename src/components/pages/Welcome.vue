@@ -65,4 +65,10 @@ img {
     margin: 0 12px;
   }
 }
+
+@media ({$small-screen}) {
+  .welcome-page {
+    display: none;
+  }
+}
 </style>
