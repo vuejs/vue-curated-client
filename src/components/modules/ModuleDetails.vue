@@ -413,6 +413,9 @@ section.general-info {
 .times {
   .time {
     display: inline-block;
+    @media({$small-screen}) {
+      display: block;
+    }
   }
 }
 
