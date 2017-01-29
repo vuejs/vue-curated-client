@@ -1,8 +1,8 @@
 <template>
-  <div class="module-details">
+  <div class="module-details" :class="cssClass">
     <div class="fake-header"></div>
     <transition-group name="module-details">
-      <div class="module-details" :key="id">
+      <div class="module-details" :key="id" @scroll="handleScroll">
         <template v-if="!loading">
           <section class="header">
 
@@ -10,12 +10,14 @@
 
             <div class="header-content">
 
-              <div class="mobile-only toolbar">
-                <router-link :to="{ name: 'home' }"><i class="material-icons">arrow_back</i></router-link>
-              </div>
+              <div class="toolbar">
+                <div class="back mobile-only">
+                  <router-link :to="{ name: 'home' }"><i class="material-icons">arrow_back</i></router-link>
+                </div>
 
-              <div class="title">
-                <span class="module-name">{{ data.label }}</span>
+                <div class="title">
+                  <span class="module-name">{{ data.label }}</span>
+                </div>
               </div>
 
               <div class="secondary">
@@ -178,6 +180,7 @@ export default {
     return {
       loading: 0,
       data: null,
+      scrollTop: 0,
     }
   },
 
@@ -195,12 +198,24 @@ export default {
     },
   },
 
+  computed: {
+    cssClass () {
+      return {
+        scrolled: this.scrollTop !== 0,
+      }
+    },
+  },
+
   methods: {
     changeCategory () {
       this.setCategory(this.data.category.id)
       if (window.innerWidth <= 800) {
         this.$router.push({ name: 'home' })
       }
+    },
+
+    handleScroll (event) {
+      this.scrollTop = event.currentTarget.scrollTop
     },
 
     humanDate,
@@ -263,13 +278,13 @@ section.header {
 section.header {
   color: white;
   margin: 0 0 24px 0;
-  padding: 24px 48px;
+  padding: 0 24px;
   border: none;
   position: relative;
   border-radius: 0;
 
   @media ({$small-screen}) {
-    padding: 24px;
+    padding: 0;
   }
 
   a {
@@ -280,8 +295,11 @@ section.header {
     }
   }
 
-  .title {
+  .toolbar {
     margin-bottom: 24px;
+  }
+
+  .title {
     text-align: center;
   }
 
@@ -313,12 +331,13 @@ section.header {
   .header-content {
     position: relative;
     z-index: 1;
+    padding: 24px;
   }
 
-  .toolbar {
+  .back {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 24px;
+    left: 24px;
     font-size: 24px;
 
     a {
@@ -452,6 +471,61 @@ section.general-info {
   position: absolute;
   left: 24px;
   right: 24px;
+}
+
+@media ({$small-screen}) {
+  section.header {
+    height: 123px;
+    box-sizing: border-box;
+
+    .toolbar,
+    .back,
+    .secondary,
+    .header-graph {
+      transition: all .3s;
+    }
+
+    .header-content {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      transition: padding .3s;
+    }
+
+    .secondary {
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+  }
+
+  .scrolled {
+    section.header {
+      .secondary,
+      .header-graph {
+        opacity: 0;
+      }
+
+      .secondary {
+        height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+
+      .header-content {
+        padding: 12px 24px;
+        background: $primary-color;
+
+        .toolbar {
+          margin-bottom: 0;
+        }
+
+        .back {
+          top: 12px;
+        }
+      }
+    }
+  }
 }
 
 </style>
