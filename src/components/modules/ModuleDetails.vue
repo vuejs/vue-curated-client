@@ -258,6 +258,7 @@ section.header {
   padding: 24px 48px;
   border: none;
   position: relative;
+  border-radius: 0;
 
   a {
     color: white;
