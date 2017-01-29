@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="module-details">
     <div class="fake-header"></div>
     <transition-group name="module-details">
       <div class="module-details" :key="id">
@@ -55,41 +55,47 @@
             </div>
           </section>
 
-          <div class="details-content">
-            <section class="general-info">
-              <div id="links" class="links">
-                <a class="open-url" :href="data.url" target="_blank"><i class="material-icons">open_in_new</i> repo</a>
+          <ui-tabs class="details-content">
+            <ui-tab label="General" icon="assignment">
+              <section class="general-info">
+                <div id="links" class="links">
+                  <a class="open-url" :href="data.url" target="_blank"><i class="material-icons">open_in_new</i> repo</a>
 
-                <a class="open-url" :href="data.url + '/issues'" target="_blank"><i class="material-icons">error_outline</i> issues</a>
+                  <a class="open-url" :href="data.url + '/issues'" target="_blank"><i class="material-icons">error_outline</i> issues</a>
 
-                <a class="open-url" v-if="data.details.has_wiki" :href="data.url + '/wiki'" target="_blank"><i class="material-icons">import_contacts</i> wiki</a>
+                  <a class="open-url" v-if="data.details.has_wiki" :href="data.url + '/wiki'" target="_blank"><i class="material-icons">import_contacts</i> wiki</a>
 
-                <a class="open-url" v-for="link of data.links" :href="link.url" target="_blank"><i class="material-icons">public</i> {{ link.label }}</a>
-              </div>
+                  <a class="open-url" v-for="link of data.links" :href="link.url" target="_blank"><i class="material-icons">public</i> {{ link.label }}</a>
+                </div>
 
-              <div id="times" class="times">
-                <span class="time info" v-tooltip="humanDate(data.details.updated_at)">
-                  <i class="material-icons">update</i>
-                  <span class="label">updated</span>
-                  <span class="value">{{ data.details.updated_at | fromNow }}</span>
-                </span>
-                <span class="time info" v-tooltip="humanDate(data.details.pushed_at)">
-                  <i class="material-icons">arrow_upward</i>
-                  <span class="label">pushed</span>
-                  <span class="value">{{ data.details.pushed_at | fromNow }}</span>
-                </span>
-                <span class="time info" v-tooltip="humanDate(data.details.created_at)">
-                  <i class="material-icons">access_time</i>
-                  <span class="label">created</span>
-                  <span class="value">{{ data.details.created_at | fromNow }}</span>
-                </span>
-              </div>
-            </section>
+                <div id="times" class="times">
+                  <span class="time info" v-tooltip="humanDate(data.details.updated_at)">
+                    <i class="material-icons">update</i>
+                    <span class="label">updated</span>
+                    <span class="value">{{ data.details.updated_at | fromNow }}</span>
+                  </span>
+                  <span class="time info" v-tooltip="humanDate(data.details.pushed_at)">
+                    <i class="material-icons">arrow_upward</i>
+                    <span class="label">pushed</span>
+                    <span class="value">{{ data.details.pushed_at | fromNow }}</span>
+                  </span>
+                  <span class="time info" v-tooltip="humanDate(data.details.created_at)">
+                    <i class="material-icons">access_time</i>
+                    <span class="label">created</span>
+                    <span class="value">{{ data.details.created_at | fromNow }}</span>
+                  </span>
+                </div>
+              </section>
 
-            <section id="readme">
-              <readme :id="id"></readme>
-            </section>
-          </div>
+              <section id="readme">
+                <readme :id="id"></readme>
+              </section>
+            </ui-tab>
+
+            <ui-tab label="Releases" icon="local_offer">
+              <releases :module-id="id"></releases>
+            </ui-tab>
+          </ui-tabs>
         </template>
 
         <ui-loading-overlay :show="loading"></ui-loading-overlay>
@@ -141,11 +147,13 @@ const detailsQuery = gql`query details($id: String!) {
 
 import Readme from './ModuleReadme.vue'
 import DownloadsGraph from './DownloadsGraph.vue'
+import Releases from './ModuleReleases.vue'
 
 export default {
   components: {
     Readme,
     DownloadsGraph,
+    Releases,
   },
 
   props: {
@@ -190,6 +198,27 @@ export default {
 }
 </script>
 
+<style lang="stylus">
+.module-details {
+  section {
+    border: solid 1px darken(white, 5%);
+    margin: 24px;
+    padding: 24px;
+    border-radius: 2px;
+
+    .info {
+      &:not(:last-child) {
+        margin-right: 6px;
+      }
+
+      .label {
+        color: $md-grey-500;
+      }
+    }
+  }
+}
+</style>
+
 <style lang="stylus" scoped>
 @import "~style/imports";
 
@@ -215,23 +244,6 @@ section.header {
   overflow-x: hidden;
   overflow-y: auto;
   background: white;
-}
-
-section {
-  border: solid 1px darken(white, 5%);
-  margin: 24px;
-  padding: 24px;
-  border-radius: 2px;
-
-  .info {
-    &:not(:last-child) {
-      margin-right: 6px;
-    }
-
-    .label {
-      color: $md-grey-500;
-    }
-  }
 }
 
 section.header {
@@ -287,20 +299,6 @@ section.header {
 .module-name {
   font-size: 42px;
   font-weight: 300;
-}
-
-.badge {
-  display: inline-block;
-  padding: 2px 4px;
-  border-radius: 3px;
-  font-size: 12px;
-  color: white;
-  background: grey;
-  vertical-align: text-top;
-
-  &:not(:last-child) {
-    margin-right: 4px;
-  }
 }
 
 .vue-version {

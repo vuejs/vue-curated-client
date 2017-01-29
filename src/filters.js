@@ -24,5 +24,5 @@ export function date (value) {
 }
 
 export function humanDate (value) {
-  return moment(value).format('L')
+  return moment(value).format('LL')
 }

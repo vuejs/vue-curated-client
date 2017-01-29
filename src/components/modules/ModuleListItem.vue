@@ -141,21 +141,12 @@ export default {
     margin-right: 6px;
   }
 
-  .badge {
-    display: inline-block;
-    padding: 2px 4px;
-    border-radius: 3px;
-    font-size: 12px;
-    color: white;
-    background: grey;
-    vertical-align: text-top;
-  }
-
   .vue-versions {
     display: inline-block;
 
     .vue-version {
       background: lighten($primary-color, 15%);
+      margin-right: 0;
 
       &:not(:last-child) {
         border-right: solid 1px white;
