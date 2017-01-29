@@ -2,12 +2,11 @@
   <div class="graph">
     <svg width="100%" height="100%">
       <defs>
-        <linearGradient id="linear" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" :stop-color="fill"/>
-          <stop offset="100%" stop-color="#40b883"/>
+        <linearGradient :id="`svg-graph-linear-gradient${_uid}`" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" :stop-color="fill.start"/>
+          <stop offset="100%" :stop-color="fill.end"/>
         </linearGradient>
       </defs>
-
       <path :d="path" :style="style"/>
     </svg>
 
@@ -37,8 +36,8 @@ export default {
       default: '#3baa7a',
     },
     fill: {
-      type: String,
-      default: '#3baa7a',
+      type: Object,
+      default: () => ({ start: '#3baa7a', end: '#40b883' }),
     },
   },
 
@@ -51,7 +50,7 @@ export default {
 
   computed: {
     style () {
-      return `stroke: ${this.stroke}; fill: url(#linear);`
+      return `stroke: ${this.stroke}; fill: url(#svg-graph-linear-gradient${this._uid});`
     },
 
     maxValue () {
@@ -91,13 +90,15 @@ export default {
 
   methods: {
     handleResize () {
-      this.width = this.$el.clientWidth
-      this.height = this.$el.clientHeight
+      this.$nextTick(() => {
+        this.width = this.$el.clientWidth
+        this.height = this.$el.clientHeight
+      })
     },
   },
 
   mounted () {
-    this.$nextTick(this.handleResize)
+    this.handleResize()
   },
 }
 </script>
