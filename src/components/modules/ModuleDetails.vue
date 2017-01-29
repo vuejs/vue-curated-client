@@ -87,6 +87,10 @@
                 </div>
               </section>
 
+              <section id="owner">
+                <owner :data="data.details.owner"></owner>
+              </section>
+
               <section id="readme">
                 <readme :id="id"></readme>
               </section>
@@ -148,12 +152,14 @@ const detailsQuery = gql`query details($id: String!) {
 import Readme from './ModuleReadme.vue'
 import DownloadsGraph from './DownloadsGraph.vue'
 import Releases from './ModuleReleases.vue'
+import Owner from './ModuleOwner.vue'
 
 export default {
   components: {
     Readme,
     DownloadsGraph,
     Releases,
+    Owner,
   },
 
   props: {
