@@ -478,6 +478,7 @@ section.general-info {
     height: 123px;
     box-sizing: border-box;
 
+    .header-content,
     .toolbar,
     .back,
     .secondary,
@@ -490,12 +491,12 @@ section.general-info {
       top: 0;
       left: 0;
       right: 0;
-      transition: padding .3s;
     }
 
     .secondary {
       overflow: hidden;
       box-sizing: border-box;
+      max-height: 2em;
     }
   }
 
@@ -507,7 +508,7 @@ section.general-info {
       }
 
       .secondary {
-        height: 0;
+        max-height: 0;
         padding-top: 0;
         padding-bottom: 0;
       }
