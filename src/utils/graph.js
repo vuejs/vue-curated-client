@@ -15,7 +15,7 @@ export function pointVerticalBounds (point, min, max) {
   }
 }
 
-export function splineCurve (firstPoint, middlePoint, afterPoint, tension) {
+export function getSplineControlPoints (firstPoint, middlePoint, afterPoint, tension) {
   // Props to Rob Spencer at scaled innovation for his post on splining between points
   // http://scaledinnovation.com/analytics/splines/aboutSplines.html
   const d01 = Math.sqrt(Math.pow(middlePoint.x - firstPoint.x, 2) + Math.pow(middlePoint.y - firstPoint.y, 2))
@@ -37,12 +37,12 @@ export function splineCurve (firstPoint, middlePoint, afterPoint, tension) {
 export function getSplinePoints (points, min, max, tension = 0.5) {
   const result = []
 
-  for (let i = 1; i < points.length - 1; i++) {
+  for (let i = 1; i < points.length; i++) {
     const currentPoint = points[i]
     const previousPoint = points[i - 1]
-    const nextPoint = points[i + 1]
+    const nextPoint = i < points.length - 1 ? points[i + 1] : currentPoint
 
-    const controlPoints = splineCurve(previousPoint, currentPoint, nextPoint, tension)
+    const controlPoints = getSplineControlPoints(previousPoint, currentPoint, nextPoint, tension)
 
     pointVerticalBounds(controlPoints.inner, min, max)
     pointVerticalBounds(controlPoints.outer, min, max)
