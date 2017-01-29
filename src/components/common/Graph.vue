@@ -8,7 +8,7 @@
         </linearGradient>
       </defs>
 
-      <path :d="d" :style="style"/>
+      <path :d="path" :style="style"/>
     </svg>
 
     <resize-observer @notify="handleResize" />
@@ -54,33 +54,34 @@ export default {
       return `stroke: ${this.stroke}; fill: url(#linear);`
     },
 
-    d () {
-      const w = this.width
-      const h = this.height
-
-      const segmentWidth = w / (this.values.length - 1)
-
+    maxValue () {
       let maxValue = 0
       this.values.forEach(value => {
         if (value > maxValue) {
           maxValue = value
         }
       })
+      return maxValue
+    },
 
-      function positionY (value) {
-        return (1 - value / maxValue) * h
-      }
-
+    points () {
+      const segmentWidth = this.width / (this.values.length - 1)
       let x = 0
       const points = []
       this.values.forEach(value => {
-        const y = positionY(value)
+        const y = (1 - value / this.maxValue) * this.height
         points.push({ x, y })
         x += segmentWidth
       })
+      return points
+    },
+
+    path () {
+      const w = this.width
+      const h = this.height
 
       let path = point('M', 0, h)
-      getSplineCurves(points, h, 0.5).forEach(coords => {
+      getSplineCurves(this.points, 0, h, 0.5).forEach(coords => {
         path += point('C', ...coords)
       })
       path += point('L', w, h)

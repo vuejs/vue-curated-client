@@ -34,7 +34,7 @@ export function splineCurve (firstPoint, middlePoint, afterPoint, tension) {
   }
 }
 
-export function getSplinePoints (points, height, tension = 0.5) {
+export function getSplinePoints (points, min, max, tension = 0.5) {
   const result = []
 
   for (let i = 1; i < points.length - 1; i++) {
@@ -44,8 +44,8 @@ export function getSplinePoints (points, height, tension = 0.5) {
 
     const controlPoints = splineCurve(previousPoint, currentPoint, nextPoint, tension)
 
-    pointVerticalBounds(controlPoints.inner, 0, height)
-    pointVerticalBounds(controlPoints.outer, 0, height)
+    pointVerticalBounds(controlPoints.inner, min, max)
+    pointVerticalBounds(controlPoints.outer, min, max)
 
     result.push({
       controlPoints,
@@ -56,9 +56,9 @@ export function getSplinePoints (points, height, tension = 0.5) {
   return result
 }
 
-export function getSplineCurves (points, height, tension) {
+export function getSplineCurves (points, min, max, tension) {
   const result = []
-  const splinePoints = getSplinePoints(points, height, tension)
+  const splinePoints = getSplinePoints(points, min, max, tension)
 
   for (let i = 1; i < splinePoints.length; i++) {
     const previousPoint = splinePoints[i - 1]
