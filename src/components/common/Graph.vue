@@ -28,11 +28,11 @@ export default {
     },
     stroke: {
       type: String,
-      default: '#3dae7d',
+      default: '#3baa7a',
     },
     fill: {
       type: String,
-      default: '#3dae7d',
+      default: '#3baa7a',
     },
   },
 
