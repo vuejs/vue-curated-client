@@ -6,7 +6,7 @@
         <template v-if="!loading">
           <section class="header">
 
-            <downloads-graph class="graph" :module-id="id"></downloads-graph>
+            <downloads-graph class="header-graph" :module-id="id"></downloads-graph>
 
             <div class="header-content">
               <div class="title">
@@ -281,10 +281,11 @@ section.header {
     }
   }
 
-  .graph {
+  .header-graph {
+    $padding = 12px;
     position: absolute;
-    top: 0;
-    bottom: 0;
+    top: $padding;
+    bottom: $padding;
     left: 0;
     right: 0;
     z-index: 0;

@@ -16,8 +16,14 @@
 </template>
 
 <script>
-function point (op, x, y) {
-  return `${op} ${x},${y} `
+import { getSplineCurves } from 'utils/graph'
+
+function point (op, ...coords) {
+  let points = ''
+  for (let i = 0; i < coords.length; i++) {
+    points += coords[i] + (i % 2 === 0 ? ',' : ' ')
+  }
+  return `${op} ${points}`
 }
 
 export default {
@@ -61,14 +67,23 @@ export default {
         }
       })
 
-      let path = point('M', 0, h)
-      let position = 0
+      function positionY (value) {
+        return (1 - value / maxValue) * h
+      }
+
+      let x = 0
+      const points = []
       this.values.forEach(value => {
-        path += point('L', position, (1 - value / maxValue) * h)
-        position += segmentWidth
+        const y = positionY(value)
+        points.push({ x, y })
+        x += segmentWidth
+      })
+
+      let path = point('M', 0, h)
+      getSplineCurves(points, h, 0.5).forEach(coords => {
+        path += point('C', ...coords)
       })
       path += point('L', w, h)
-      path += 'Z'
       return path
     },
   },
