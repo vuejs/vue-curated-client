@@ -5,14 +5,14 @@ Vue.use(VueRouter)
 
 import Main from 'components/pages/Main'
 import Welcome from 'components/pages/Welcome'
-import Module from 'components/pages/Module'
+import ModuleDetails from 'components/modules/ModuleDetails.vue'
 import NotFound from 'components/pages/NotFound'
 
 /* eslint-disable object-property-newline */
 const routes = [
   { path: '/', component: Main, children: [
     { path: '', name: 'home', component: Welcome },
-    { path: 'module/:id', name: 'module', component: Module },
+    { path: 'module/:id', name: 'module', component: ModuleDetails, props: true },
   ] },
   { path: '*', component: NotFound },
 ]
