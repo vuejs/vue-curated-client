@@ -21,6 +21,8 @@
 
             <span class="badge module-badge" v-if="module.badge" :class="module.badge">{{ module.badge }}</span>
 
+            <span class="badge new-badge" v-if="isNew">new</span>
+
             <a class="open-url" :href="module.url" target="_blank" v-tooltip="'Open repository'"><i class="material-icons">open_in_new</i></a>
           </span>
 
@@ -52,6 +54,8 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   props: {
     module: {
@@ -62,6 +66,11 @@ export default {
   computed: {
     details () {
       return this.module.details
+    },
+
+    isNew () {
+      const limit = moment().subtract(1, 'months')
+      return moment(this.details.created_at).isAfter(limit)
     },
   },
 
@@ -169,6 +178,10 @@ export default {
 
   .module-badge {
     background: $md-orange-700;
+  }
+
+  .new-badge {
+    background: $md-purple-500;
   }
 
   .details,
