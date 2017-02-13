@@ -62,6 +62,7 @@ const moduleQuery = gql`query modules ($release: String) {
       forks_count
       open_issues_count
       created_at
+      pushed_at
       owner {
         login
         avatar_url

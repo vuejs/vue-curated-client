@@ -22,6 +22,7 @@
             <span class="badge module-badge" v-if="module.badge" :class="module.badge">{{ module.badge }}</span>
 
             <span class="badge new-badge" v-if="isNew">new</span>
+            <span class="badge updated-badge" v-else-if="isUpdated">updated</span>
 
             <a class="open-url" :href="module.url" target="_blank" v-tooltip="'Open repository'"><i class="material-icons">open_in_new</i></a>
           </span>
@@ -71,6 +72,11 @@ export default {
     isNew () {
       const limit = moment().subtract(1, 'months')
       return moment(this.details.created_at).isAfter(limit)
+    },
+
+    isUpdated () {
+      const limit = moment().subtract(3, 'days')
+      return moment(this.details.pushed_at).isAfter(limit)
     },
   },
 
@@ -182,6 +188,10 @@ export default {
 
   .new-badge {
     background: $md-purple-500;
+  }
+
+  .updated-badge {
+    background: $md-deep-purple-500;
   }
 
   .details,
