@@ -116,45 +116,10 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
 import { mapMutations } from 'vuex'
 import { humanDate } from 'filters'
 
-const detailsQuery = gql`query details($id: String!) {
-  module(id: $id) {
-    id
-    label
-    url
-    vue
-    links {
-      url
-      label
-    }
-    status
-    badge
-    details {
-      name
-      description
-      forks_count
-      stargazers_count
-      forks_count
-      open_issues_count
-      has_wiki
-      created_at
-      pushed_at
-      updated_at
-      owner {
-        login
-        avatar_url
-        html_url
-      }
-    }
-    category {
-      id
-      label
-    }
-  }
-}`
+import DETAILS_QUERY from 'graphql/ModuleDetails.gql'
 
 import Readme from './ModuleReadme.vue'
 import DownloadsGraph from './DownloadsGraph.vue'
@@ -186,14 +151,13 @@ export default {
 
   apollo: {
     data: {
-      query: detailsQuery,
+      query: DETAILS_QUERY,
       variables () {
         return {
           id: this.id,
         }
       },
       update: ({ module }) => module,
-      returnPartialData: true,
       loadingKey: 'loading',
     },
   },

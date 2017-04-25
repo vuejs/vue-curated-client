@@ -1,0 +1,19 @@
+query releases($id: ID!) {
+  module(id: $id) {
+    id
+    releases {
+      id
+      html_url
+      tag_name
+      name
+      body
+      prerelease
+      published_at
+      files {
+        download_url
+        size
+        download_count
+      }
+    }
+  }
+}

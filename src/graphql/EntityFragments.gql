@@ -1,0 +1,4 @@
+fragment Entity on Entity {
+  id
+  label
+}

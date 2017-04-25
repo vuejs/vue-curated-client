@@ -1,0 +1,7 @@
+#import "./EntityFragments.gql"
+
+query categories {
+  module_categories {
+    ...Entity
+  }
+}

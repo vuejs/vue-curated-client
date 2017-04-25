@@ -1,0 +1,7 @@
+#import "./EntityFragments.gql"
+
+query releases {
+  vue_releases {
+    ...Entity
+  }
+}

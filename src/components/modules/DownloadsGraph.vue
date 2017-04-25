@@ -7,18 +7,7 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
-
-const downloadsQuery = gql`query downloads($id: String!) {
-  module(id: $id) {
-    npm_package {
-      range_downloads {
-        day
-        downloads
-      }
-    }
-  }
-}`
+import DOWNLOADS_QUERY from 'graphql/Downloads.gql'
 
 export default {
   props: {
@@ -36,7 +25,7 @@ export default {
 
   apollo: {
     days: {
-      query: downloadsQuery,
+      query: DOWNLOADS_QUERY,
       variables () {
         return {
           id: this.moduleId,

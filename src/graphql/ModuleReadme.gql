@@ -1,0 +1,8 @@
+query details($id: ID!) {
+  module (id: $id) {
+    id
+    readme {
+      content
+    }
+  }
+}

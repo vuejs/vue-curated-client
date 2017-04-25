@@ -1,33 +1,38 @@
 import Vue from 'vue'
-import App from './App'
 
-import VTooltip from 'v-tooltip'
-Vue.use(VTooltip)
+// Plugins
+import './plugins'
 
-import 'vue-resize/dist/vue-resize.css'
-import VueResize from 'vue-resize/dist/vue-resize'
-Vue.use(VueResize)
-
-import './api/apollo'
-
+// Filters
 import * as filters from './filters'
 for (const k in filters) {
   Vue.filter(k, filters[k])
 }
 
+// Global components
 import './components/common'
+
+// Injections
 
 import router from './router'
 import store from './store'
-import initStore from './store/init'
+// Apollo GraphQL
+import { createProvider } from './api/apollo'
+const apolloProvider = createProvider()
+
+// Root component
+import App from './App'
 
 /* eslint-disable no-new */
 new Vue({
   router,
   store,
+  apolloProvider,
+
   el: '#app',
   render: h => h(App),
-  mounted () {
-    initStore(this.$store)
+  
+  created () {
+    this.$store.dispatch('init')
   },
 })

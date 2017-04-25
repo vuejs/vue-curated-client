@@ -1,0 +1,11 @@
+query downloads($id: ID!) {
+  module(id: $id) {
+    id
+    npm_package {
+      range_downloads {
+        day
+        downloads
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+#import "./EntityFragments.gql"
+
+fragment Module on Module {
+  ...Entity
+  url
+  vue
+  links {
+    url
+    label
+  }
+  status
+  badge
+  category {
+    id
+    label
+  }
+  details {
+    name
+    description
+    forks_count
+    stargazers_count
+    open_issues_count
+    has_wiki
+    created_at
+    pushed_at
+    updated_at
+    owner {
+      login
+      avatar_url
+      html_url
+    }
+  }
+}

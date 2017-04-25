@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
 import { mapGetters } from 'vuex'
 import { search } from 'utils/search'
 
@@ -39,38 +38,7 @@ import Module from './ModuleListItem.vue'
 import Categories from './Categories.vue'
 import Releases from './Releases.vue'
 
-const moduleQuery = gql`query modules ($release: String) {
-  modules (release: $release) {
-    id
-    label
-    url
-    vue
-    links {
-      url
-      label
-    }
-    status
-    badge
-    category {
-      id
-      label
-    }
-    details {
-      description
-      forks_count
-      stargazers_count
-      forks_count
-      open_issues_count
-      created_at
-      pushed_at
-      owner {
-        login
-        avatar_url
-        html_url
-      }
-    }
-  }
-}`
+import MODULES_QUERY from 'graphql/Modules.gql'
 
 export default {
   name: 'main-pane',
@@ -91,14 +59,13 @@ export default {
 
   apollo: {
     modules: {
-      query: moduleQuery,
+      query: MODULES_QUERY,
       variables () {
         return {
           release: this.release,
         }
       },
       update: data => data ? data.modules : [],
-      returnPartialData: true,
       loadingKey: 'loading',
       skip () {
         return this.releases.length === 0

@@ -1,32 +1,13 @@
 <template>
   <div class="module-releases">
-    <release v-for="release of releases" :data="release"></release>
+    <release v-for="release of releases" :key="release.id" :data="release"></release>
 
     <ui-loading-overlay :show="loading"></ui-loading-overlay>
   </div>
 </template>
 
 <script>
-import gql from 'graphql-tag'
-
-const releasesQuery = gql`query releases($id: String!) {
-  module(id: $id) {
-    releases {
-      id
-      html_url
-      tag_name
-      name
-      body
-      prerelease
-      published_at
-      files {
-        download_url
-        size
-        download_count
-      }
-    }
-  }
-}`
+import RELEASES_QUERY from 'graphql/ModuleReleases.gql'
 
 import Release from './ModuleRelease.vue'
 
@@ -50,7 +31,7 @@ export default {
 
   apollo: {
     releases: {
-      query: releasesQuery,
+      query: RELEASES_QUERY,
       variables () {
         return {
           id: this.moduleId,

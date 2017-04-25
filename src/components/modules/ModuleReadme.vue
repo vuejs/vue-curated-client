@@ -1,29 +1,24 @@
 <template>
   <div class="readme" :class="cssClasses">
     <transition name="fade" mode="out-in">
-      <div class="content markdown" v-if="ready" key="html" v-html="renderedHTML"></div>
+      <div class="content markdown" v-if="!loading" key="html" v-html="renderedHTML"></div>
       <div class="loading" v-else key="loading">
         <ui-loading-animation></ui-loading-animation>
       </div>
     </transition>
 
-    <div class="actions">
-      <button @click="showFull = !showFull">{{ showFull ? 'Hide full Readme' : 'Show full Readme' }}</button>
-    </div>
+    <transition name="fade">
+      <div class="actions" v-if="!loading">
+        <button @click="showFull = !showFull">{{ showFull ? 'Hide full Readme' : 'Show full Readme' }}</button>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
-import gql from 'graphql-tag'
 import marked from 'marked'
 
-const readmeQuery = gql`query details($id: String!) {
-  module (id: $id) {
-    readme {
-      content
-    }
-  }
-}`
+import README_QUERY from 'graphql/ModuleReadme.gql'
 
 export default {
   props: {
@@ -42,7 +37,7 @@ export default {
 
   apollo: {
     readme: {
-      query: readmeQuery,
+      query: README_QUERY,
       variables () {
         return {
           id: this.id,
@@ -50,7 +45,6 @@ export default {
       },
       update: ({ module }) => module.readme,
       loadingKey: 'loading',
-      returnPartialData: true,
     },
   },
 
@@ -59,10 +53,6 @@ export default {
       return {
         preview: !this.showFull,
       }
-    },
-
-    ready () {
-      return this.readme
     },
 
     renderedHTML () {

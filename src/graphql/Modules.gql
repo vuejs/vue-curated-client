@@ -1,0 +1,7 @@
+#import "./ModuleFragments.gql"
+
+query modules ($release: String) {
+  modules (release: $release) {
+    ...Module
+  }
+}

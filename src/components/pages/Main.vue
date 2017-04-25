@@ -52,6 +52,7 @@ export default {
   .page-content {
     overflow-x: hidden;
     overflow-y: auto;
+    height: 100%;
   }
 }
 
