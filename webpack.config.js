@@ -66,7 +66,7 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        GRAPHQL_URL: JSON.stringify(process.env.GRAPHQL_URL || 'http://curated-api.vuejs.org/graphql')
+        GRAPHQL_URL: JSON.stringify(process.env.GRAPHQL_URL || 'https://vue-curated-server.now.sh/graphql')
       }
     })
   ]
