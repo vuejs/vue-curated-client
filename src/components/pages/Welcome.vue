@@ -9,8 +9,8 @@
       Browse a curated list of high-quality <a href="https://vuejs.org/">Vue.js</a> packages that will help you build awesome apps.
     </section>
     <section class="actions">
-      <a href="https://github.com/Akryum/vue-curated/blob/master/PACKAGES.md"><i class="material-icons">assistant</i> Submit a package</a>
-      <a href="https://github.com/Akryum/vue-curated-client"><i class="material-icons">edit</i> Contribute to the app</a>
+      <a href="https://github.com/vuejs/vue-curated/blob/master/PACKAGES.md"><i class="material-icons">assistant</i> Submit a package</a>
+      <a href="https://github.com/vuejs/vue-curated-client"><i class="material-icons">edit</i> Contribute to the app</a>
     </section>
   </div>
 </template>
