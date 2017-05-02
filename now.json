@@ -1,7 +1,0 @@
-{
-  "name": "vue-curated-client",
-  "alias": "vue-curated",
-  "env": {
-    "GRAPHQL_URL": "https://vue-curated-server.now.sh/graphql"
-  }
-}
