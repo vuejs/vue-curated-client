@@ -35,7 +35,7 @@ const scrollBehavior = (to, from, savedPosition) => {
 
 const router = new VueRouter({
   routes,
-  mode: 'history',
+  mode: 'hash', // so that it works on github pages
   scrollBehavior,
 })
 
