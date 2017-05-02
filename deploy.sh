@@ -3,6 +3,7 @@ mkdir .deploy
 npm run build
 mv dist .deploy/
 cp index.html .deploy/
+cp index.html .deploy/404.html
 cp CNAME .deploy/
 cd .deploy
 git init
