@@ -1,0 +1,19 @@
+.zoom-enter-active,
+.zoom-leave-active {
+  transition: transform .15s cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+
+.zoom-enter,
+.zoom-leave-to {
+  transform: scale(0);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .15s linear;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}

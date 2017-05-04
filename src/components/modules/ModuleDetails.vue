@@ -11,7 +11,7 @@
             <div class="header-content">
 
               <div class="toolbar">
-                <div class="back mobile-only">
+                <div class="back" v-if="$responsive.mobile">
                   <router-link :to="{ name: 'home' }"><i class="material-icons">arrow_back</i></router-link>
                 </div>
 
@@ -237,6 +237,7 @@ section.header {
   overflow-x: hidden;
   overflow-y: auto;
   background: white;
+  z-index: 100;
 }
 
 section.header {

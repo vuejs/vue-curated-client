@@ -36,7 +36,6 @@ export default {
   width: 40%;
   height: 100%;
   max-width: 700px;
-  padding: 12px;
   box-sizing: border-box;
   background: rgba(black, .025);
   // border-right: solid 1px darken(white, 5%);
