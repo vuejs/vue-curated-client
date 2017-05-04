@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "apollo-client": "^1.0.4",
+    "emojione": "^3.0.3",
     "marked": "^0.3.6",
     "moment": "^2.18.1",
     "numeral": "^2.0.6",

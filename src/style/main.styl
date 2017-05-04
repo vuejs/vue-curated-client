@@ -1,4 +1,5 @@
 @import "~style/imports";
+@import "./transitions";
 
 body {
   margin: 0;
@@ -23,6 +24,12 @@ body,
   cursor: inherit;
   position: relative;
   top: -.08em;
+}
+
+.emojione {
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
 }
 
 a {
@@ -52,16 +59,41 @@ button {
   display: inline-block;
   text-align: center;
   transition: background .3s;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 
   &:hover {
     background: lighten($primary-color, 10%);
+  }
+
+  &:active {
+    background: darken($primary-color, 10%);
+  }
+
+  &.fab {
+    position: fixed;
+    z-index: 1;
+    bottom: 24px;
+    right: 18px;
+    font-size: 24px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(black, .3);
+
+    > i {
+      top: 0;
+    }
   }
 }
 
 input {
   background: white;
   display: block;
-  margin-bottom: 12px;
   width: 100%;
   box-sizing: border-box;
   border: solid 1px $md-grey-100;
@@ -86,16 +118,42 @@ input {
     top: 14px;
     left: 14px;
     font-size: 20px;
+    color: black;
   }
 }
 
+.hero,
 .empty {
   color: $md-grey-400;
   text-align: center;
   padding: 24px;
-  height: 70px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &.fill {
+    height: 100%;
+  }
+}
+
+.empty {
+  height: 70px;
   margin-bottom: -70px;
+
+  @media ({$small-screen}) {
+    font-size: 22px;
+  }
+}
+
+.hero {
+  font-size: 24px;
+
+  > .icon {
+    font-size: 42px;
+    opacity: .5;
+  }
 }
 
 .tooltip {
@@ -199,6 +257,12 @@ input {
   }
 }
 
+.badges,
+.badge-group {
+  display: inline-flex;
+  align-items: center;
+}
+
 .badge {
   display: inline-block;
   padding: 2px 4px;
@@ -207,9 +271,36 @@ input {
   color: white;
   background: grey;
   vertical-align: text-top;
+}
 
+.badge,
+.badge-group {
   &:not(:last-child) {
     margin-right: 4px;
+  }
+}
+
+.badge-group {
+  .badge {
+    background: lighten($primary-color, 15%);
+    margin-right: 0;
+
+    &:not(:last-child) {
+      border-right: solid 1px white;
+    }
+
+    &:first-child {
+      border-radius: 3px 0 0 3px;
+    }
+
+    &:last-child {
+      border-radius: 0 3px 3px 0;
+      background: $primary-color;
+    }
+
+    &:first-child:last-child {
+      border-radius: 3px;
+    }
   }
 }
 
@@ -219,16 +310,4 @@ input {
   .mobile-only {
     display: none;
   }
-}
-
-// Transitions
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity .3s linear;
-}
-
-.fade-enter,
-.fade-leave-active {
-  opacity: 0;
 }

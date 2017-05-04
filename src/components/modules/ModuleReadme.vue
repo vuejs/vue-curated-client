@@ -57,7 +57,7 @@ export default {
 
     renderedHTML () {
       if (this.readme) {
-        return marked(this.readme.content)
+        return this.$parseEmoji(marked(this.readme.content))
       }
     },
   },

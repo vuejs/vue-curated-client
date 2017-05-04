@@ -11,16 +11,20 @@ const store = new Vuex.Store({
   state: {
     categoryId: null,
     categories: [],
+    categoriesReady: false,
     releaseId: null,
     releases: [],
+    releasesReady: false,
   },
 
   getters: {
     'categoryId': state => state.categoryId,
     'categories': state => state.categories,
+    'categoriesReady': state => state.categoriesReady,
 
     'releaseId': state => state.releaseId,
     'releases': state => state.releases,
+    'releasesReady': state => state.releasesReady,
   },
 
   mutations: {
@@ -29,7 +33,8 @@ const store = new Vuex.Store({
     },
 
     'set_categories': (state, categories) => {
-      state.categories = categories
+      state.categories = categories.slice().sort((a, b) => a.label < b.label ? -1 : 1)
+      state.categoriesReady = true
     },
 
     'set_release': (state, releaseId) => {
@@ -38,6 +43,7 @@ const store = new Vuex.Store({
 
     'set_releases': (state, releases) => {
       state.releases = releases
+      state.releasesReady = true
     },
   },
 

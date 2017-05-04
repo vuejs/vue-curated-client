@@ -15,16 +15,22 @@
           <span class="label">
             <span class="module-label">{{ module.label }}</span>
 
-            <span class="vue-versions">
-              <span class="badge vue-version" v-for="version of module.vue">{{ version }}</span>
+            <span class="badges">
+              <span class="badge-group vue-versions">
+                <span class="badge vue-version" v-for="version of module.vue">{{ version }}</span>
+              </span>
+
+              <span class="badge module-badge" v-if="module.badge" :class="module.badge">{{ module.badge }}</span>
+
+              <span class="badge new-badge" v-if="isNew">new</span>
+              <span class="badge updated-badge" v-else-if="isUpdated" v-tooltip="updatedTooltip">
+                <i class="material-icons">cached</i>
+              </span>
             </span>
 
-            <span class="badge module-badge" v-if="module.badge" :class="module.badge">{{ module.badge }}</span>
-
-            <span class="badge new-badge" v-if="isNew">new</span>
-            <span class="badge updated-badge" v-else-if="isUpdated">updated</span>
-
-            <a class="open-url" :href="module.url" target="_blank" v-tooltip="'Open repository'"><i class="material-icons">open_in_new</i></a>
+            <a class="open-url" :href="module.url" target="_blank" v-tooltip="'Open repository'">
+              <i class="material-icons">open_in_new</i>
+            </a>
           </span>
 
           <span class="details" v-if="details">
@@ -47,7 +53,7 @@
 
         <div class="secondary">
           <span class="category">{{ module.category.label }}</span>
-          <span class="description" v-if="details">{{ details.description }}</span>
+          <span class="description" v-if="details" v-html="$parseEmoji(details.description)"></span>
         </div>
       </div>
     </div>
@@ -56,6 +62,7 @@
 
 <script>
 import moment from 'moment'
+import { fromNow } from 'filters'
 
 export default {
   props: {
@@ -77,6 +84,10 @@ export default {
     isUpdated () {
       const limit = moment().subtract(3, 'days')
       return moment(this.details.pushed_at).isAfter(limit)
+    },
+
+    updatedTooltip () {
+      return `Pushed ${fromNow(this.details.pushed_at)}`
     },
   },
 
@@ -156,28 +167,16 @@ export default {
     margin-right: 6px;
   }
 
-  .vue-versions {
-    display: inline-block;
+  .badges {
+    vertical-align: bottom;
+  }
 
+  .vue-versions {
     .vue-version {
       background: lighten($primary-color, 15%);
-      margin-right: 0;
-
-      &:not(:last-child) {
-        border-right: solid 1px white;
-      }
-
-      &:first-child {
-        border-radius: 3px 0 0 3px;
-      }
 
       &:last-child {
-        border-radius: 0 3px 3px 0;
         background: $primary-color;
-      }
-
-      &:first-child:last-child {
-        border-radius: 3px;
       }
     }
   }

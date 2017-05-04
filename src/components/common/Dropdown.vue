@@ -40,14 +40,14 @@ export default {
 
 .dropdown {
   background: white;
+  border-bottom: solid 2px $md-grey-300;
+  border-radius: 2px;
+  box-shadow: 0 0 64px rgba(black, .1);
 }
 
 .dropdown-content {
-  max-height: 400px;
+  max-height: 380px;
   overflow-x: hidden;
   overflow-y: auto;
-  border: solid 1px $md-grey-100;
-  border-bottom: solid 2px $md-grey-300;
-  border-radius: 2px;
 }
 </style>

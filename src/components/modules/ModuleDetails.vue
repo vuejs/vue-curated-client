@@ -1,112 +1,127 @@
 <template>
-  <div class="module-details" :class="cssClass">
+  <div class="module-details page-content" :class="cssClass">
     <div class="fake-header"></div>
     <transition-group name="module-details">
       <div class="module-details" :key="id" @scroll="handleScroll">
         <template v-if="!loading">
-          <section class="header">
+          <div class="empty fill" v-if="!data">
+            <div>
+              <p>
+                <i class="material-icons">cake</i>
+                <span>If you were told there was a package here, that was a lie.</span>
+              </p>
+              <button v-if="$responsive.mobile" @click="$router.replace({ name: 'home' })">Explore other packages</button>
+            </div>
+          </div>
+          <template v-else>
+            <section class="header">
 
-            <downloads-graph class="header-graph" :module-id="id"></downloads-graph>
+              <downloads-graph class="header-graph" :module-id="id"></downloads-graph>
 
-            <div class="header-content">
+              <div class="header-content">
 
-              <div class="toolbar">
-                <div class="back mobile-only">
-                  <router-link :to="{ name: 'home' }"><i class="material-icons">arrow_back</i></router-link>
+                <div class="toolbar">
+                  <div class="back" v-if="$responsive.mobile">
+                    <router-link :to="{ name: 'home' }"><i class="material-icons">arrow_back</i></router-link>
+                  </div>
+
+                  <div class="title">
+                    <span class="module-name" v-html="$parseEmoji(data.label)"></span>
+                  </div>
                 </div>
 
-                <div class="title">
-                  <span class="module-name">{{ data.label }}</span>
+                <div class="secondary">
+                  <span class="category">
+                    <a v-tooltip="'Category'" @click="changeCategory">{{ data.category.label }}</a>
+                  </span>
+
+                  <span class="badges">
+                    <span class="badge vue-version" v-for="version of data.vue">
+                      <span class="badge-label">vue</span>
+                      {{ version }}
+                    </span>
+
+                    <span class="badge module-badge" v-if="data.badge" :class="data.badge">{{ data.badge }}</span>
+                  </span>
+
+                  <span class="stats">
+                    <a class="stat stars" :href="data.url + '/stargazers'" v-tooltip="'Stars'">
+                      {{ data.details.stargazers_count | shortenNumber }}
+                      <i class="material-icons">star</i>
+                    </a>
+
+                    <a class="stat forks" :href="data.url + '/network'" v-tooltip="'Forks'">
+                      {{ data.details.forks_count | shortenNumber }}
+                      <i class="material-icons">call_split</i>
+                    </a>
+
+                    <a class="stat issues" :href="data.url + '/issues'" v-tooltip="'Open Issues'">
+                      {{ data.details.open_issues_count | shortenNumber }}
+                      <i class="material-icons">error_outline</i>
+                    </a>
+                  </span>
                 </div>
               </div>
 
-              <div class="secondary">
-                <span class="category">
-                  <a v-tooltip="'Category'" @click="changeCategory">{{ data.category.label }}</a>
-                </span>
+            </section>
 
-                <span class="badges">
-                  <span class="badge vue-version" v-for="version of data.vue">
-                    <span class="badge-label">vue</span>
-                    {{ version }}
-                  </span>
+            <ui-tabs class="details-content">
+              <ui-tab id="general" label="General" icon="assignment">
+                <section class="catcher description">
+                  <div class="text" v-html="$parseEmoji(data.details.description)"></div>
+                </section>
 
-                  <span class="badge module-badge" v-if="data.badge" :class="data.badge">{{ data.badge }}</span>
-                </span>
+                <section class="general-info">
+                  <div id="links" class="links">
+                    <a class="open-url" :href="data.url" target="_blank"><i class="material-icons">open_in_new</i> repo</a>
 
-                <span class="stats">
-                  <a class="stat stars" :href="data.url + '/stargazers'" v-tooltip="'Stars'">
-                    {{ data.details.stargazers_count | shortenNumber }}
-                    <i class="material-icons">star</i>
-                  </a>
+                    <a class="open-url" :href="data.url + '/issues'" target="_blank"><i class="material-icons">error_outline</i> issues</a>
 
-                  <a class="stat forks" :href="data.url + '/network'" v-tooltip="'Forks'">
-                    {{ data.details.forks_count | shortenNumber }}
-                    <i class="material-icons">call_split</i>
-                  </a>
+                    <a class="open-url" v-if="data.details.has_wiki" :href="data.url + '/wiki'" target="_blank"><i class="material-icons">import_contacts</i> wiki</a>
 
-                  <a class="stat issues" :href="data.url + '/issues'" v-tooltip="'Open Issues'">
-                    {{ data.details.open_issues_count | shortenNumber }}
-                    <i class="material-icons">error_outline</i>
-                  </a>
-                </span>
-              </div>
-            </div>
+                    <a class="open-url" v-for="link of data.links" :href="link.url" target="_blank"><i class="material-icons">public</i> {{ link.label }}</a>
+                  </div>
 
-          </section>
+                  <div id="times" class="times">
+                    <span class="time info" v-tooltip="humanDate(data.details.updated_at)">
+                      <i class="material-icons">update</i>
+                      <span class="label">updated</span>
+                      <span class="value">{{ data.details.updated_at | fromNow }}</span>
+                    </span>
+                    <span class="time info" v-tooltip="humanDate(data.details.pushed_at)">
+                      <i class="material-icons">arrow_upward</i>
+                      <span class="label">pushed</span>
+                      <span class="value">{{ data.details.pushed_at | fromNow }}</span>
+                    </span>
+                    <span class="time info" v-tooltip="humanDate(data.details.created_at)">
+                      <i class="material-icons">access_time</i>
+                      <span class="label">created</span>
+                      <span class="value">{{ data.details.created_at | fromNow }}</span>
+                    </span>
+                  </div>
+                </section>
 
-          <section class="description">
-            <i class="icon material-icons">assistant</i>
-            <div class="text">
-              {{ data.details.description }}
-            </div>
-          </section>
+                <section id="owner">
+                  <owner :data="data.details.owner"></owner>
+                </section>
 
-          <ui-tabs class="details-content">
-            <ui-tab label="General" icon="assignment">
-              <section class="general-info">
-                <div id="links" class="links">
-                  <a class="open-url" :href="data.url" target="_blank"><i class="material-icons">open_in_new</i> repo</a>
+                <section id="readme">
+                  <readme :id="id"></readme>
+                </section>
+              </ui-tab>
 
-                  <a class="open-url" :href="data.url + '/issues'" target="_blank"><i class="material-icons">error_outline</i> issues</a>
+              <ui-tab id="releases" label="Releases" icon="local_offer">
+                <a class="catcher tip" :href="`${data.url}/releases.atom`" target="_blank">
+                  <i class="icon material-icons">rss_feed</i>
+                  <div class="text">
+                    Subscribe to the releases feed!
+                  </div>
+                </a>
 
-                  <a class="open-url" v-if="data.details.has_wiki" :href="data.url + '/wiki'" target="_blank"><i class="material-icons">import_contacts</i> wiki</a>
-
-                  <a class="open-url" v-for="link of data.links" :href="link.url" target="_blank"><i class="material-icons">public</i> {{ link.label }}</a>
-                </div>
-
-                <div id="times" class="times">
-                  <span class="time info" v-tooltip="humanDate(data.details.updated_at)">
-                    <i class="material-icons">update</i>
-                    <span class="label">updated</span>
-                    <span class="value">{{ data.details.updated_at | fromNow }}</span>
-                  </span>
-                  <span class="time info" v-tooltip="humanDate(data.details.pushed_at)">
-                    <i class="material-icons">arrow_upward</i>
-                    <span class="label">pushed</span>
-                    <span class="value">{{ data.details.pushed_at | fromNow }}</span>
-                  </span>
-                  <span class="time info" v-tooltip="humanDate(data.details.created_at)">
-                    <i class="material-icons">access_time</i>
-                    <span class="label">created</span>
-                    <span class="value">{{ data.details.created_at | fromNow }}</span>
-                  </span>
-                </div>
-              </section>
-
-              <section id="owner">
-                <owner :data="data.details.owner"></owner>
-              </section>
-
-              <section id="readme">
-                <readme :id="id"></readme>
-              </section>
-            </ui-tab>
-
-            <ui-tab label="Releases" icon="local_offer">
-              <releases :module-id="id"></releases>
-            </ui-tab>
-          </ui-tabs>
+                <releases :module-id="id"></releases>
+              </ui-tab>
+            </ui-tabs>
+          </template>
         </template>
 
         <ui-loading-overlay :show="loading"></ui-loading-overlay>
@@ -126,7 +141,11 @@ import DownloadsGraph from './DownloadsGraph.vue'
 import Releases from './ModuleReleases.vue'
 import Owner from './ModuleOwner.vue'
 
+import ObserveScroll from 'mixins/ObserveScroll'
+
 export default {
+  mixins: [ObserveScroll],
+
   components: {
     Readme,
     DownloadsGraph,
@@ -145,7 +164,6 @@ export default {
     return {
       loading: 0,
       data: null,
-      scrollTop: 0,
     }
   },
 
@@ -176,10 +194,6 @@ export default {
       if (window.innerWidth <= 800) {
         this.$router.push({ name: 'home' })
       }
-    },
-
-    handleScroll (event) {
-      this.scrollTop = event.currentTarget.scrollTop
     },
 
     humanDate,
@@ -237,11 +251,12 @@ section.header {
   overflow-x: hidden;
   overflow-y: auto;
   background: white;
+  z-index: 100;
 }
 
 section.header {
   color: white;
-  margin: 0 0 24px 0;
+  margin: 0;
   padding: 0 24px;
   border: none;
   position: relative;
@@ -347,16 +362,19 @@ section.header {
 
 }
 
-section.description {
+.catcher {
+  display: block;
+  text-decoration: none;
   background: $primary-color;
   color: white;
+  padding: 24px;
   margin: 24px;
   margin-bottom: 0;
   border-radius: 2px;
+  border: none;
   font-size: 20px;
   display: flex;
-  align-items: center;
-  animation: slide-to-bottom .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+  align-items: flex-start;
 
   .icon {
     flex: auto 0 0;
@@ -368,6 +386,10 @@ section.description {
 
   .text {
     flex: auto 1 1;
+  }
+
+  &.tip {
+    background: $md-deep-purple-500;
   }
 }
 
@@ -462,12 +484,11 @@ section.general-info {
     height: 123px;
     box-sizing: border-box;
 
-    .header-content,
     .toolbar,
     .back,
     .secondary,
     .header-graph {
-      transition: all .3s;
+      transition: all .15s cubic-bezier(0.0, 0.0, 0.2, 1);
     }
 
     .header-content {
@@ -475,6 +496,7 @@ section.general-info {
       top: 0;
       left: 0;
       right: 0;
+      transition: padding .15s cubic-bezier(0.0, 0.0, 0.2, 1);
     }
 
     .secondary {
