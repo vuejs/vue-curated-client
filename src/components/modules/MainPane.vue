@@ -23,16 +23,20 @@
     </transition>
 
     <div class="section modules" @scroll="handleScroll">
-      <template v-if="!loading && displayModules.length === 0">
-        <div class="empty" v-if="(!showSearch || searchText)">
-          <i class="material-icons">cake</i>
-          <span>No package found.</span>
+      <transition name="fade">
+        <div class="empty" v-if="!loading && displayModules.length === 0">
+          <div>
+            <template v-if="(!showSearch || searchText)">
+              <i class="material-icons">cake</i>
+              <span>No package found.</span>
+            </template>
+            <template v-else>
+              <i class="material-icons">search</i>
+              <span>Type to search packages</span>
+            </template>
+          </div>
         </div>
-        <div class="hero search-hero" v-else>
-          <i class="icon material-icons">search</i>
-          <span>Type to search packages</span>
-        </div>
-      </template>
+      </transition>
 
       <transition-group name="module" tag="div" class="modules-list">
         <module v-for="module of displayModules" v-if="module" class="module" :key="module.id" :module="module" :class="{active: currentModuleDetailsId === module.id}"></module>
@@ -312,7 +316,7 @@ export default {
   }
 }
 
-.search-hero {
+.empty {
   position: absolute;
   width: 100%;
   height: calc(100vh - 100px);
