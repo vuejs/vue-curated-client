@@ -1,5 +1,5 @@
 <template>
-  <div class="main-pane" :class="{loading: loading}">
+  <div class="main-pane" :class="cssClass">
     <div class="section header">
       <div class="logo">
         <router-link :to="{ name: 'home' }"><img src="~assets/logo.png" width="32" height="32" /></router-link>
@@ -22,7 +22,7 @@
       </div>
     </transition>
 
-    <div class="section modules">
+    <div class="section modules" @scroll="handleScroll">
       <template v-if="!loading && displayModules.length === 0">
         <div class="empty" v-if="(!showSearch || searchText)">
           <i class="material-icons">cake</i>
@@ -59,8 +59,12 @@ import Releases from './Releases.vue'
 
 import MODULES_QUERY from 'graphql/Modules.gql'
 
+import ObserveScroll from 'mixins/ObserveScroll'
+
 export default {
   name: 'main-pane',
+
+  mixins: [ObserveScroll],
 
   components: {
     Module,
@@ -94,6 +98,13 @@ export default {
   },
 
   computed: {
+    cssClass () {
+      return {
+        loading: this.loading,
+        scrolled: this.scrollTop !== 0,
+      }
+    },
+
     currentModuleDetailsId () {
       if (this.$route.matched.some(r => r.name === 'module')) {
         return this.$route.params.id
@@ -168,6 +179,8 @@ export default {
     background: $primary-color;
     height: 70px;
     padding-top: 0 !important;
+    position: relative;
+    z-index: 1;
   }
 }
 
@@ -216,7 +229,6 @@ export default {
     padding: 12px;
     z-index: 1;
     background: white;
-    box-shadow: 0 3px 12px rgba(black, .05);
 
     .search-input {
       input {
@@ -286,6 +298,18 @@ export default {
   position: absolute;
   width: 100%;
   height: calc(100vh - 100px);
+}
+
+@media ({$small-screen}) {
+  .header {
+    transition: box-shadow .15s;
+  }
+
+  .scrolled {
+    .header {
+      box-shadow: 0 2px 24px rgba(black, .2);
+    }
+  }
 }
 
 </style>

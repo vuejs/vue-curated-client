@@ -133,7 +133,11 @@ import DownloadsGraph from './DownloadsGraph.vue'
 import Releases from './ModuleReleases.vue'
 import Owner from './ModuleOwner.vue'
 
+import ObserveScroll from 'mixins/ObserveScroll'
+
 export default {
+  mixins: [ObserveScroll],
+
   components: {
     Readme,
     DownloadsGraph,
@@ -152,7 +156,6 @@ export default {
     return {
       loading: 0,
       data: null,
-      scrollTop: 0,
     }
   },
 
@@ -183,10 +186,6 @@ export default {
       if (window.innerWidth <= 800) {
         this.$router.push({ name: 'home' })
       }
-    },
-
-    handleScroll (event) {
-      this.scrollTop = event.currentTarget.scrollTop
     },
 
     humanDate,
@@ -249,7 +248,7 @@ section.header {
 
 section.header {
   color: white;
-  margin: 0 0 24px 0;
+  margin: 0;
   padding: 0 24px;
   border: none;
   position: relative;
@@ -367,7 +366,7 @@ section.header {
   border: none;
   font-size: 20px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 
   .icon {
     flex: auto 0 0;
@@ -477,12 +476,11 @@ section.general-info {
     height: 123px;
     box-sizing: border-box;
 
-    .header-content,
     .toolbar,
     .back,
     .secondary,
     .header-graph {
-      transition: all .3s;
+      transition: all .15s cubic-bezier(0.0, 0.0, 0.2, 1);
     }
 
     .header-content {
@@ -490,6 +488,7 @@ section.general-info {
       top: 0;
       left: 0;
       right: 0;
+      transition: padding .15s cubic-bezier(0.0, 0.0, 0.2, 1);
     }
 
     .secondary {
