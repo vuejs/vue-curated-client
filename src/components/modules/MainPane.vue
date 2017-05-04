@@ -77,7 +77,7 @@ export default {
       modules: [],
       searchText: '',
       showSearch: false,
-      loading: 0,
+      apolloLoading: 0,
     }
   },
 
@@ -90,7 +90,7 @@ export default {
         }
       },
       update: data => data ? data.modules : [],
-      loadingKey: 'loading',
+      loadingKey: 'apolloLoading',
       skip () {
         return this.releases.length === 0
       },
@@ -98,6 +98,13 @@ export default {
   },
 
   computed: {
+    ...mapGetters({
+      category: 'categoryId',
+      releases: 'releases',
+      release: 'releaseId',
+      releasesReady: 'releasesReady',
+    }),
+
     cssClass () {
       return {
         loading: this.loading,
@@ -137,11 +144,9 @@ export default {
       return this.filteredModules // .sort((a, b) => a.label < b.label ? -1 : 1)
     },
 
-    ...mapGetters({
-      category: 'categoryId',
-      releases: 'releases',
-      release: 'releaseId',
-    }),
+    loading () {
+      return !this.releasesReady || this.apolloLoading
+    },
   },
 }
 </script>
