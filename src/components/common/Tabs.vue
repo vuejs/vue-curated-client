@@ -1,5 +1,5 @@
 <template>
-  <div class="tabs">
+  <div class="tabs" :class="cssClass">
     <div class="header">
       <div v-for="(tab, index) of tabs" class="tab-header" :class="{ active: tab === currentTab }" @click="currentTabIndex = index">
         <i class="icon material-icons" v-if="tab.icon" v-html="tab.icon"></i>
@@ -18,12 +18,19 @@ export default {
     return {
       tabs: [],
       currentTabIndex: 0,
+      switchDirection: 'left',
     }
   },
 
   computed: {
     currentTab () {
       return this.currentTabIndex < this.tabs.length && this.tabs[this.currentTabIndex]
+    },
+
+    cssClass () {
+      return [
+        `switch-direction-${this.switchDirection}`,
+      ]
     },
   },
 
@@ -39,6 +46,16 @@ export default {
       }
     },
   },
+
+  watch: {
+    currentTabIndex (val, oldVal) {
+      if (val < oldVal) {
+        this.switchDirection = 'right'
+      } else {
+        this.switchDirection = 'left'
+      }
+    }
+  },
 }
 </script>
 
@@ -51,8 +68,7 @@ export default {
 }
 
 .tab-header {
-  padding: 16px;
-  padding-bottom: 12px;
+  padding: 12px 16px;
   border-bottom: solid 2px transparent;
   color: grey;
   cursor: pointer;
@@ -66,5 +82,9 @@ export default {
   &:hover {
     background: rgba($primary-color, .2);
   }
+}
+
+.body {
+  position: relative;
 }
 </style>
