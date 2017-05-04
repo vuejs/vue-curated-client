@@ -55,15 +55,15 @@
 
           </section>
 
-          <section class="description">
-            <i class="icon material-icons">assistant</i>
-            <div class="text">
-              {{ data.details.description }}
-            </div>
-          </section>
-
           <ui-tabs class="details-content">
-            <ui-tab label="General" icon="assignment">
+            <ui-tab id="general" label="General" icon="assignment">
+              <section class="catcher description">
+                <i class="icon material-icons">info_outline</i>
+                <div class="text">
+                  {{ data.details.description }}
+                </div>
+              </section>
+
               <section class="general-info">
                 <div id="links" class="links">
                   <a class="open-url" :href="data.url" target="_blank"><i class="material-icons">open_in_new</i> repo</a>
@@ -103,7 +103,14 @@
               </section>
             </ui-tab>
 
-            <ui-tab label="Releases" icon="local_offer">
+            <ui-tab id="releases" label="Releases" icon="local_offer">
+              <a class="catcher tip" :href="`${data.url}/releases.atom`" target="_blank">
+                <i class="icon material-icons">rss_feed</i>
+                <div class="text">
+                  Subscribe to the releases feed!
+                </div>
+              </a>
+
               <releases :module-id="id"></releases>
             </ui-tab>
           </ui-tabs>
@@ -348,16 +355,19 @@ section.header {
 
 }
 
-section.description {
+.catcher {
+  display: block;
+  text-decoration: none;
   background: $primary-color;
   color: white;
+  padding: 24px;
   margin: 24px;
   margin-bottom: 0;
   border-radius: 2px;
+  border: none;
   font-size: 20px;
   display: flex;
   align-items: center;
-  animation: slide-to-bottom .3s cubic-bezier(0.0, 0.0, 0.2, 1);
 
   .icon {
     flex: auto 0 0;
@@ -369,6 +379,10 @@ section.description {
 
   .text {
     flex: auto 1 1;
+  }
+
+  &.tip {
+    background: $md-deep-purple-500;
   }
 }
 
