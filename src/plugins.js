@@ -21,3 +21,6 @@ Vue.use(Responsive, {
     },
   },
 })
+
+import Emoji from './utils/emoji'
+Vue.use(Emoji)

@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="title">
-                  <span class="module-name">{{ data.label }}</span>
+                  <span class="module-name" v-html="$parseEmoji(data.label)"></span>
                 </div>
               </div>
 
@@ -58,10 +58,7 @@
           <ui-tabs class="details-content">
             <ui-tab id="general" label="General" icon="assignment">
               <section class="catcher description">
-                <i class="icon material-icons">info_outline</i>
-                <div class="text">
-                  {{ data.details.description }}
-                </div>
+                <div class="text" v-html="$parseEmoji(data.details.description)"></div>
               </section>
 
               <section class="general-info">
