@@ -254,6 +254,11 @@ export default {
     margin-left: 12px;
     margin-right: 12px;
   }
+
+  @media ({$small-screen}) {
+    padding-top: 12px;
+    padding-bottom: 64px;
+  }
 }
 
 .module {
