@@ -103,7 +103,14 @@
               </section>
             </ui-tab>
 
-            <ui-tab label="Releases" icon="local_offer">
+            <ui-tab id="releases" label="Releases" icon="local_offer">
+              <a class="catcher tip" :href="`${data.url}/releases.atom`" target="_blank">
+                <i class="icon material-icons">rss_feed</i>
+                <div class="text">
+                  Subscribe to the releases feed!
+                </div>
+              </a>
+
               <releases :module-id="id"></releases>
             </ui-tab>
           </ui-tabs>
@@ -371,6 +378,10 @@ section.header {
 
   .text {
     flex: auto 1 1;
+  }
+
+  &.tip {
+    background: $md-deep-purple-500;
   }
 }
 
