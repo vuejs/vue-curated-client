@@ -12,7 +12,7 @@
     <transition name="fade">
       <div class="section toolbar search-toolbar" v-if="!$responsive.mobile || showSearch">
         <div class="back" v-if="$responsive.mobile">
-          <a @click="showSearch = false"><i class="material-icons">arrow_back</i></a>
+          <a @click="closeSearch"><i class="material-icons">arrow_back</i></a>
         </div>
 
         <span class="search-input">
@@ -42,7 +42,7 @@
     </div>
 
     <transition name="zoom">
-      <button class="fab" v-if="$responsive.mobile && !showSearch" @click="showSearch = true">
+      <button class="fab" v-if="$responsive.mobile && !showSearch" @click="openSearch">
         <i class="icon material-icons">search</i>
       </button>
     </transition>
@@ -76,7 +76,6 @@ export default {
     return {
       modules: [],
       searchText: '',
-      showSearch: false,
       apolloLoading: 0,
     }
   },
@@ -146,6 +145,20 @@ export default {
 
     loading () {
       return !this.releasesReady || this.apolloLoading
+    },
+
+    showSearch () {
+      return this.$route.query.search
+    },
+  },
+
+  methods: {
+    openSearch () {
+      this.$router.push({ query: { search: true }})
+    },
+
+    closeSearch () {
+      this.$router.push({ query: {}})
     },
   },
 }
