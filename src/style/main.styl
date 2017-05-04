@@ -199,6 +199,12 @@ input {
   }
 }
 
+.badges,
+.badge-group {
+  display: inline-flex;
+  align-items: center;
+}
+
 .badge {
   display: inline-block;
   padding: 2px 4px;
@@ -207,9 +213,36 @@ input {
   color: white;
   background: grey;
   vertical-align: text-top;
+}
 
+.badge,
+.badge-group {
   &:not(:last-child) {
     margin-right: 4px;
+  }
+}
+
+.badge-group {
+  .badge {
+    background: lighten($primary-color, 15%);
+    margin-right: 0;
+
+    &:not(:last-child) {
+      border-right: solid 1px white;
+    }
+
+    &:first-child {
+      border-radius: 3px 0 0 3px;
+    }
+
+    &:last-child {
+      border-radius: 0 3px 3px 0;
+      background: $primary-color;
+    }
+
+    &:first-child:last-child {
+      border-radius: 3px;
+    }
   }
 }
 

@@ -15,14 +15,16 @@
           <span class="label">
             <span class="module-label">{{ module.label }}</span>
 
-            <span class="vue-versions">
-              <span class="badge vue-version" v-for="version of module.vue">{{ version }}</span>
+            <span class="badges">
+              <span class="badge-group vue-versions">
+                <span class="badge vue-version" v-for="version of module.vue">{{ version }}</span>
+              </span>
+
+              <span class="badge module-badge" v-if="module.badge" :class="module.badge">{{ module.badge }}</span>
+
+              <span class="badge new-badge" v-if="isNew">new</span>
+              <span class="badge updated-badge" v-else-if="isUpdated">updated</span>
             </span>
-
-            <span class="badge module-badge" v-if="module.badge" :class="module.badge">{{ module.badge }}</span>
-
-            <span class="badge new-badge" v-if="isNew">new</span>
-            <span class="badge updated-badge" v-else-if="isUpdated">updated</span>
 
             <a class="open-url" :href="module.url" target="_blank" v-tooltip="'Open repository'"><i class="material-icons">open_in_new</i></a>
           </span>
@@ -157,27 +159,11 @@ export default {
   }
 
   .vue-versions {
-    display: inline-block;
-
     .vue-version {
       background: lighten($primary-color, 15%);
-      margin-right: 0;
-
-      &:not(:last-child) {
-        border-right: solid 1px white;
-      }
-
-      &:first-child {
-        border-radius: 3px 0 0 3px;
-      }
 
       &:last-child {
-        border-radius: 0 3px 3px 0;
         background: $primary-color;
-      }
-
-      &:first-child:last-child {
-        border-radius: 3px;
       }
     }
   }
