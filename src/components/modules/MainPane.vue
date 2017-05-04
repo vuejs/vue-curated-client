@@ -141,7 +141,7 @@ export default {
     },
 
     displayModules () {
-      return this.filteredModules // .sort((a, b) => a.label < b.label ? -1 : 1)
+      return this.filteredModules.slice().sort((a, b) => a.label < b.label ? -1 : 1)
     },
 
     loading () {

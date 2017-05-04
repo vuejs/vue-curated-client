@@ -33,7 +33,7 @@ const store = new Vuex.Store({
     },
 
     'set_categories': (state, categories) => {
-      state.categories = categories
+      state.categories = categories.slice().sort((a, b) => a.label < b.label ? -1 : 1)
       state.categoriesReady = true
     },
 
