@@ -1,5 +1,5 @@
 <template>
-  <div class="module-details" :class="cssClass">
+  <div class="module-details page-content" :class="cssClass">
     <div class="fake-header"></div>
     <transition-group name="module-details">
       <div class="module-details" :key="id" @scroll="handleScroll">

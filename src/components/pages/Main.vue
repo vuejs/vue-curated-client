@@ -3,7 +3,14 @@
 
     <main-pane class="left-pane"></main-pane>
 
-    <div class="page-wrapper">
+    <template v-if="$responsive.mobile">
+      <transition name="mobile-page" duration="150">
+        <div class="page-wrapper" :key="$route.fullPath">
+          <router-view></router-view>
+        </div>
+      </transition>
+    </template>
+    <div v-else class="page-wrapper">
       <router-view></router-view>
     </div>
 
@@ -90,6 +97,7 @@ export default {
     left: 0;
     right: 0;
     z-index: 100;
+    width: 100%;
   }
 }
 </style>
