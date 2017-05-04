@@ -23,10 +23,14 @@
               <span class="badge module-badge" v-if="module.badge" :class="module.badge">{{ module.badge }}</span>
 
               <span class="badge new-badge" v-if="isNew">new</span>
-              <span class="badge updated-badge" v-else-if="isUpdated">updated</span>
+              <span class="badge updated-badge" v-else-if="isUpdated" v-tooltip="updatedTooltip">
+                <i class="material-icons">cached</i>
+              </span>
             </span>
 
-            <a class="open-url" :href="module.url" target="_blank" v-tooltip="'Open repository'"><i class="material-icons">open_in_new</i></a>
+            <a class="open-url" :href="module.url" target="_blank" v-tooltip="'Open repository'">
+              <i class="material-icons">open_in_new</i>
+            </a>
           </span>
 
           <span class="details" v-if="details">
@@ -58,6 +62,7 @@
 
 <script>
 import moment from 'moment'
+import { fromNow } from 'filters'
 
 export default {
   props: {
@@ -79,6 +84,10 @@ export default {
     isUpdated () {
       const limit = moment().subtract(3, 'days')
       return moment(this.details.pushed_at).isAfter(limit)
+    },
+
+    updatedTooltip () {
+      return `Pushed ${fromNow(this.details.pushed_at)}`
     },
   },
 
@@ -156,6 +165,10 @@ export default {
 
   .module-label {
     margin-right: 6px;
+  }
+
+  .badges {
+    vertical-align: bottom;
   }
 
   .vue-versions {
