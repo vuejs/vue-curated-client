@@ -2,7 +2,7 @@
 
 > Curated vue packages.
 
-Consumes [vue-curated](https://github.com/vuejs/vue-curated/blob/master/MODULES.md) and needs [vue-curated-server](https://github.com/vuejs/vue-curated-server).
+Consumes [vue-curated](https://github.com/vuejs/vue-curated/blob/master/PACKAGES.md) and needs [vue-curated-server](https://github.com/vuejs/vue-curated-server).
 
 ## Build Setup
 
