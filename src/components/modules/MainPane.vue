@@ -40,6 +40,10 @@
 
       <transition-group name="module" tag="div" class="modules-list">
         <module v-for="module of displayModules" v-if="module" class="module" :key="module.id" :module="module" :class="{active: currentModuleDetailsId === module.id}"></module>
+        <div class="suggestion" key="suggestion">
+          <span>Not finding what you are looking for?</span>
+          <a href="https://github.com/vuejs/awesome-vue"><i class="material-icons">star</i> Browse more packages</a>
+        </div>
       </transition-group>
 
       <ui-loading-overlay :show="loading" no-background></ui-loading-overlay>
@@ -316,10 +320,17 @@ export default {
   }
 }
 
-.empty {
-  position: absolute;
-  width: 100%;
-  height: calc(100vh - 100px);
+.empty,
+.suggestion {
+  text-align: center;
+  color: darken(white, 50%);
+  padding: 24px 12px;
+}
+
+.suggestion {
+  a {
+    display: inline-block;
+  }
 }
 
 @media ({$small-screen}) {
