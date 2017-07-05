@@ -40,7 +40,7 @@
 
       <transition-group name="module" tag="div" class="modules-list">
         <module v-for="module of displayModules" v-if="module" class="module" :key="module.id" :module="module" :class="{active: currentModuleDetailsId === module.id}"></module>
-        <div class="suggestion" key="suggestion">
+        <div v-if="!loading" class="suggestion" key="suggestion">
           <span>Not finding what you are looking for?</span>
           <a href="https://github.com/vuejs/awesome-vue"><i class="material-icons">star</i> Browse more packages</a>
         </div>
