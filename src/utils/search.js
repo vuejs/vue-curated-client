@@ -21,9 +21,11 @@ export function search (items, text, fields) {
       // Fields
       for (const f of fields) {
         const value = f.field(item)
-        const matched = value.match(reg.reg)
-        if (matched) {
-          regScore += matched.length * f.weight
+        if (value) {
+          const matched = value.match(reg.reg)
+          if (matched) {
+            regScore += matched.length * f.weight
+          }
         }
       }
 
