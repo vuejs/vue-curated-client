@@ -67,7 +67,7 @@
 
             <ui-tabs class="details-content">
               <ui-tab id="general" label="General" icon="assignment">
-                <section class="catcher description">
+                <section v-if="data.details.description" class="catcher description">
                   <div class="text" v-html="$parseEmoji(data.details.description)"></div>
                 </section>
 

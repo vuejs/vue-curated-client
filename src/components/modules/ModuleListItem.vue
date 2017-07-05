@@ -53,7 +53,7 @@
 
         <div class="secondary">
           <span class="category">{{ module.category.label }}</span>
-          <span class="description" v-if="details" v-html="$parseEmoji(details.description)"></span>
+          <span class="description" v-if="details && details.description" v-html="$parseEmoji(details.description)"></span>
         </div>
       </div>
     </div>
