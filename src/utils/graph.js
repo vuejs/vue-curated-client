@@ -1,20 +1,3 @@
-
-export function pointHorizontalBounds (point, min, max) {
-  if (point.x < min) {
-    point.x = min
-  } else if (point.x > max) {
-    point.x = max
-  }
-}
-
-export function pointVerticalBounds (point, min, max) {
-  if (point.y < min) {
-    point.y = min
-  } else if (point.y > max) {
-    point.y = max
-  }
-}
-
 export function getSplineControlPoints (firstPoint, middlePoint, afterPoint, tension) {
   // Props to Rob Spencer at scaled innovation for his post on splining between points
   // http://scaledinnovation.com/analytics/splines/aboutSplines.html
@@ -44,8 +27,12 @@ export function getSplinePoints (points, min, max, tension = 0.5) {
 
     const controlPoints = getSplineControlPoints(previousPoint, currentPoint, nextPoint, tension)
 
-    pointVerticalBounds(controlPoints.inner, min, max)
-    pointVerticalBounds(controlPoints.outer, min, max)
+    // Prevent the curves from overflowing
+    if (controlPoints.inner.y > max || controlPoints.outer.y > max) {
+      controlPoints.inner.y = controlPoints.outer.y = max
+    } else if (controlPoints.inner.y < min || controlPoints.outer.y < min) {
+      controlPoints.inner.y = controlPoints.outer.y = min
+    }
 
     result.push({
       controlPoints,
@@ -75,4 +62,12 @@ export function getSplineCurves (points, min, max, tension) {
   }
 
   return result
+}
+
+export function printPoint (op, ...coords) {
+  const points = []
+  for (let i = 0; i < coords.length; i += 2) {
+    points.push(`${coords[i]},${coords[i + 1]}`)
+  }
+  return `${op} ${points.join(' ')} `
 }

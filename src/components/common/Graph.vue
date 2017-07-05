@@ -15,15 +15,7 @@
 </template>
 
 <script>
-import { getSplineCurves } from 'utils/graph'
-
-function point (op, ...coords) {
-  let points = ''
-  for (let i = 0; i < coords.length; i++) {
-    points += coords[i] + (i % 2 === 0 ? ',' : ' ')
-  }
-  return `${op} ${points}`
-}
+import { getSplineCurves, printPoint } from 'utils/graph'
 
 export default {
   props: {
@@ -78,12 +70,15 @@ export default {
     path () {
       const w = this.width
       const h = this.height
-
-      let path = point('M', 0, h)
-      getSplineCurves(this.points, 0, h, 0.5).forEach(coords => {
-        path += point('C', ...coords)
+      const points = this.points
+      const firstPoint = points[0]
+      let path = printPoint('M', firstPoint.x, firstPoint.y)
+      points.splice(0, 0, firstPoint)
+      getSplineCurves(points, 0, h, 0.35).forEach((coords, index) => {
+        path += printPoint('C', ...coords)
       })
-      path += point('L', w, h)
+      path += printPoint('L', w, h + 4)
+      path += printPoint('L', 0, h + 4)
       return path
     },
   },
