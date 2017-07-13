@@ -1,12 +1,11 @@
 import Vue from 'vue'
-import { ApolloClient, createNetworkInterface } from 'apollo-client'
+import { ApolloClient, createBatchingNetworkInterface } from 'apollo-client'
 import VueApollo from 'vue-apollo'
 
 // Create the apollo client
 export const apolloClient = new ApolloClient({
-  networkInterface: createNetworkInterface({
+  networkInterface: createBatchingNetworkInterface({
     uri: process.env.GRAPHQL_URL || 'http://localhost:3000/graphql',
-    transportBatching: true,
   }),
 })
 
