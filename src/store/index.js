@@ -2,10 +2,10 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { apolloClient } from 'api/apollo'
 
-Vue.use(Vuex)
-
 import RELEASES_QUERY from 'graphql/VueReleases.gql'
 import CATEGORIES_QUERY from 'graphql/ModuleCategories.gql'
+
+Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
