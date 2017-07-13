@@ -92,15 +92,14 @@ export default {
     modules: {
       query: MODULES_QUERY,
       variables () {
+        const release = this.releases.length === 0 || this.release === this.releases[0].id ?
+          '_LATEST_' : this.release
         return {
-          release: this.release,
+          release,
         }
       },
       update: data => data ? data.modules.slice().sort((a, b) => a.label < b.label ? -1 : 1) : [],
       loadingKey: 'apolloLoading',
-      skip () {
-        return this.releases.length === 0
-      },
     },
   },
 
@@ -152,7 +151,7 @@ export default {
     },
 
     loading () {
-      return !this.releasesReady || this.apolloLoading
+      return this.apolloLoading
     },
 
     showSearch () {
