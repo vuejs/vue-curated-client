@@ -53,7 +53,10 @@
 
         <div class="secondary">
           <span class="category">{{ module.category.label }}</span>
-          <span class="description" v-if="details && details.description" v-html="$parseEmoji(details.description)"></span>
+          <span
+            v-if="details && details.description"
+            class="description"
+            v-html="$parseEmoji(details.description)"></span>
         </div>
       </div>
     </div>
@@ -231,7 +234,6 @@ export default {
     }
 
     .description {
-      font-style: italic;
       text-align: right;
       flex: auto 1 1;
       min-width: 50px;
