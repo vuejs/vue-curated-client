@@ -31,8 +31,9 @@ export default {
 }
 
 .option {
-  padding: 12px 16px;
+  padding: 12px 32px 12px 16px;
   transition: background .15s, color .15s;
+  white-space: nowrap;
 
   &:hover {
     background: rgba($primary-color, .1);
