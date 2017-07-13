@@ -115,7 +115,6 @@ export default {
 .module-list-item {
   cursor: default;
   position: relative;
-  height: 90px;
   box-sizing: border-box;
 
   .module-header {
