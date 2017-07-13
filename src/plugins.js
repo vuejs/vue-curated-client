@@ -1,13 +1,14 @@
 import Vue from 'vue'
-
 import VTooltip from 'v-tooltip'
-Vue.use(VTooltip)
-
 import 'vue-resize/dist/vue-resize.css'
 import VueResize from 'vue-resize/dist/vue-resize'
+import Responsive from './utils/responsive'
+import Emoji from './utils/emoji'
+
+Vue.use(VTooltip)
+
 Vue.use(VueResize)
 
-import Responsive from './utils/responsive'
 Vue.use(Responsive, {
   computed: {
     mobile () {
@@ -22,5 +23,4 @@ Vue.use(Responsive, {
   },
 })
 
-import Emoji from './utils/emoji'
 Vue.use(Emoji)

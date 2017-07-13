@@ -31,7 +31,7 @@ new Vue({
 
   el: '#app',
   render: h => h(App),
-  
+
   created () {
     this.$store.dispatch('init')
   },

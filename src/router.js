@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-Vue.use(VueRouter)
-
 import Main from 'components/pages/Main'
 import Welcome from 'components/pages/Welcome'
 import ModuleDetails from 'components/modules/ModuleDetails.vue'
 import NotFound from 'components/pages/NotFound'
+
+Vue.use(VueRouter)
 
 /* eslint-disable object-property-newline */
 const routes = [
