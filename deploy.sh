@@ -1,6 +1,6 @@
 rm -rf .deploy
 mkdir .deploy
-npm run build
+GRAPHQL_URL=https://vue-curated-api.now.sh/graphql npm run build
 mv dist .deploy/
 cp index.html .deploy/
 cp index.html .deploy/404.html
