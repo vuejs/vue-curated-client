@@ -1,5 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
+var htmlPlugin = require('html-webpack-plugin')
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 var momentLocales = /en/
@@ -8,7 +9,7 @@ module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
+    publicPath: '/',
     filename: 'build.js',
   },
   module: {
@@ -66,6 +67,9 @@ module.exports = {
   },
   devtool: '#eval-source-map',
   plugins: [
+    new htmlPlugin({
+      template: 'src/index.html'
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),

@@ -12,11 +12,12 @@
     "analyze": "cross-env ANALYZE=on npm run build"
   },
   "engines": {
-    "node": "6.9.1"
+    "node": ">6.9.1"
   },
   "dependencies": {
     "apollo-client": "^1.0.4",
     "emojione": "^3.0.3",
+    "html-webpack-plugin": "^2.30.1",
     "marked": "^0.3.6",
     "moment": "^2.18.1",
     "numeral": "^2.0.6",
