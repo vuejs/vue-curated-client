@@ -15,111 +15,49 @@ body,
   overflow: hidden;
 }
 
-.material-icons {
-  font-size: inherit;
-  width: 1em;
-  height: 1em;
-  vertical-align: middle;
-  display: inline-block;
-  cursor: inherit;
-  position: relative;
-  top: -.08em;
-}
-
 .emojione {
   width: 1em;
   height: 1em;
   vertical-align: middle;
 }
 
-a {
-  color: $primary-color;
-  text-decoration: none;
-  cursor: pointer;
+a
+  color $primary-color
+  text-decoration none
+  cursor pointer
+  display inline-flex
+  align-items center
 
-  &:hover {
-    color: lighten($primary-color, 30%);
-  }
-}
+  .vue-icon
+    &:first-child
+      margin-right 4px
+    &:last-child
+      margin-left 4px
+    &:first-child:last-child
+      margin 0
+    svg
+      fill @color
 
-button,
-input {
-  font-size: inherit;
-  font-family: inherit;
-  border: none;
-  outline: none;
-  padding: 12px 24px;
-  border-radius: 2px;
-}
+  &:hover
+    color lighten($primary-color, 30%)
+    .vue-icon
+      svg
+        fill @color
 
-button {
-  background: $primary-color;
-  color: white;
-  cursor: pointer;
-  display: inline-block;
-  text-align: center;
-  transition: background .3s;
-  user-select: none;
-  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-
-  &:hover {
-    background: lighten($primary-color, 10%);
-  }
-
-  &:active {
-    background: darken($primary-color, 10%);
-  }
-
-  &.fab {
-    position: fixed;
-    z-index: 1;
-    bottom: 24px;
-    right: 18px;
-    font-size: 24px;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 10px rgba(black, .3);
-
-    > i {
-      top: 0;
-    }
-  }
-}
-
-input {
-  background: white;
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-  border: solid 1px $md-grey-100;
-  border-bottom: solid 2px $md-grey-300;
-  text-align: left;
-
-  &:focus {
-    border-bottom-color: $primary-color;
-  }
-}
-
-.search-input {
-  position: relative;
-  display: block;
-
-  input {
-    padding-left: 42px;
-  }
-
-  .icon {
-    position: absolute;
-    top: 14px;
-    left: 14px;
-    font-size: 20px;
-    color: black;
-  }
+.fab {
+  position: fixed;
+  z-index: 1;
+  bottom: 24px;
+  right: 18px;
+  font-size: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(black, .3);
 }
 
 .hero,
@@ -129,7 +67,7 @@ input {
   padding: 24px;
   box-sizing: border-box;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
 
@@ -139,8 +77,17 @@ input {
 }
 
 .empty {
+  .vue-icon {
+    margin-right 4px
+  }
+
   @media ({$small-screen}) {
     font-size: 22px;
+
+    .vue-icon {
+      width @font-size
+      height @width
+    }
   }
 }
 
@@ -150,31 +97,6 @@ input {
   > .icon {
     font-size: 42px;
     opacity: .5;
-  }
-}
-
-.tooltip {
-  display: none;
-  opacity: 0;
-  transition: opacity .15s;
-  pointer-events: none;
-  padding: 4px;
-  z-index: 10000;
-  font-size: 14px;
-
-  .tooltip-content {
-    background: rgba(black, .7);
-    color: white;
-    border-radius: 2px;
-    padding: 5px 10px 4px;
-  }
-
-  &.tooltip-open-transitionend {
-    display: block;
-  }
-
-  &.tooltip-after-open {
-    opacity: 1;
   }
 }
 
@@ -261,13 +183,22 @@ input {
 }
 
 .badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items center
   padding: 2px 4px;
   border-radius: 3px;
   font-size: 12px;
   color: white;
   background: grey;
   vertical-align: text-top;
+  min-height 19px
+  box-sizing border-box
+
+  .vue-icon {
+    svg {
+      fill @color
+    }
+  }
 }
 
 .badge,

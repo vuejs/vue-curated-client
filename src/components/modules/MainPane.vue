@@ -12,29 +12,29 @@
     <transition name="fade">
       <div class="section toolbar search-toolbar" v-if="!$responsive.mobile || showSearch">
         <div class="back" v-if="$responsive.mobile">
-          <a @click="closeSearch"><i class="material-icons">arrow_back</i></a>
+          <a @click="closeSearch"><VueIcon icon="arrow_back"/></a>
         </div>
 
-        <span class="search-input">
-          <i class="icon material-icons">search</i>
-          <input v-model="searchText" placeholder="Search package" />
-        </span>
+        <VueInput
+          v-model="searchText"
+          class="search-input big"
+          placeholder="Search package"
+          icon-left="search"
+        />
       </div>
     </transition>
 
     <div class="section modules" @scroll="handleScroll">
       <transition name="fade">
         <div class="empty" v-if="!loading && displayModules.length === 0">
-          <div>
-            <template v-if="(!showSearch || searchText)">
-              <i class="material-icons">cake</i>
-              <span>No package found.</span>
-            </template>
-            <template v-else>
-              <i class="material-icons">search</i>
-              <span>Type to search packages</span>
-            </template>
-          </div>
+          <template v-if="(!showSearch || searchText)">
+            <VueIcon icon="cake"/>
+            <span>No package found.</span>
+          </template>
+          <template v-else>
+            <VueIcon icon="search"/>
+            <span>Type to search packages</span>
+          </template>
         </div>
       </transition>
 
@@ -42,17 +42,23 @@
         <module v-for="module of displayModules" v-if="module" class="module" :key="module.id" :module="module" :class="{active: currentModuleDetailsId === module.id}"></module>
         <div v-if="!loading" class="suggestion" key="suggestion">
           <span>Not finding what you are looking for?</span>
-          <a href="https://github.com/vuejs/awesome-vue"><i class="material-icons">star</i> Browse more packages</a>
+          <a href="https://github.com/vuejs/awesome-vue"><VueIcon icon="star"/> Browse more packages</a>
         </div>
       </transition-group>
 
-      <ui-loading-overlay :show="loading" no-background></ui-loading-overlay>
+      <VueLoadingIndicator
+        v-if="loading"
+        class="overlay primary big transparent"
+      />
     </div>
 
     <transition name="zoom">
-      <button class="fab" v-if="$responsive.mobile && !showSearch" @click="openSearch">
-        <i class="icon material-icons">search</i>
-      </button>
+      <VueButton
+        v-if="$responsive.mobile && !showSearch"
+        class="icon-button round fab big primary"
+        icon-left="search"
+        @click="openSearch"
+      />
     </transition>
   </div>
 </template>
@@ -199,6 +205,10 @@ export default {
   flex: auto 0 0;
   box-sizing: border-box;
 
+  > div + div {
+    margin-left 6px
+  }
+
   @media ({$small-screen}) {
     color: white;
     background: $primary-color;
@@ -206,6 +216,15 @@ export default {
     padding-top: 0 !important;
     position: relative;
     z-index: 1;
+
+    >>> .vue-button {
+      color @color
+      .vue-icon {
+        svg {
+          fill @color
+        }
+      }
+    }
   }
 }
 
@@ -254,22 +273,6 @@ export default {
     padding: 12px;
     z-index: 1;
     background: white;
-
-    .search-input {
-      input {
-        border-top: none;
-        border-left: none;
-        border-right: none;
-        padding-left: 12px;
-        padding-right: 42px;
-        border-radius: 0;
-      }
-
-      .icon {
-        left: auto;
-        right: 14px;
-      }
-    }
 
     .back {
       font-size: 24px;
@@ -326,9 +329,18 @@ export default {
   padding: 24px 12px;
 }
 
+.empty
+  .vue-icon
+    >>> svg
+      fill darken(white, 50%)
+
 .suggestion {
+  v-box()
+  box-center()
+
   a {
-    display: inline-block;
+    display: flex;
+    margin-top 2px
   }
 }
 

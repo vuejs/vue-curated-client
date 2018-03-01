@@ -3,13 +3,16 @@
     <transition name="fade" mode="out-in">
       <div class="content markdown" v-if="!loading" key="html" v-html="renderedHTML"></div>
       <div class="loading" v-else key="loading">
-        <ui-loading-animation></ui-loading-animation>
+        <VueLoadingIndicator/>
       </div>
     </transition>
 
     <transition name="fade">
       <div class="actions" v-if="!loading">
-        <button @click="showFull = !showFull">{{ showFull ? 'Hide full Readme' : 'Show full Readme' }}</button>
+        <VueButton
+          class="primary big"
+          @click="showFull = !showFull"
+        >{{ showFull ? 'Hide full Readme' : 'Show full Readme' }}</VueButton>
       </div>
     </transition>
   </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="downloads-graph">
     <transition name="fade">
-      <ui-graph v-if="values" :values="values"></ui-graph>
+      <BaseGraph v-if="values" :values="values"/>
     </transition>
   </div>
 </template>

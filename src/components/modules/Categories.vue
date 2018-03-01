@@ -1,6 +1,17 @@
 <template>
   <div class="categories">
-    <ui-select v-model="input" :options="options"></ui-select>
+    <VueSelect
+      v-model="input"
+      button-class="flat big"
+    >
+      <VueSelectButton
+        v-for="option of options"
+        :key="option.id"
+        :value="option.id"
+        :label="option.label"
+        class="primary big"
+      />
+    </VueSelect>
   </div>
 </template>
 
@@ -13,10 +24,10 @@ export default {
   computed: {
     input: {
       get () {
-        return this.categories.find(c => c.id === this.currentCategory) || defaultOption
+        return (this.categories.find(c => c.id === this.currentCategory) || defaultOption).id
       },
       set (val) {
-        this.setCategory(val.id)
+        this.setCategory(val)
       },
     },
 

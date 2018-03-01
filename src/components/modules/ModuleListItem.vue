@@ -24,29 +24,29 @@
 
               <span class="badge new-badge" v-if="isNew">new</span>
               <span class="badge updated-badge" v-else-if="isUpdated" v-tooltip="updatedTooltip">
-                <i class="material-icons">cached</i>
+                <VueIcon icon="cached" class="small"/>
               </span>
             </span>
 
             <a class="open-url" :href="module.url" target="_blank" v-tooltip="'Open repository'">
-              <i class="material-icons">open_in_new</i>
+              <VueIcon icon="open_in_new"/>
             </a>
           </span>
 
           <span class="details" v-if="details">
             <span class="stat stars" v-tooltip="'Stars'">
               {{ details.stargazers_count | shortenNumber }}
-              <i class="material-icons">star</i>
+              <VueIcon icon="star"/>
             </span>
 
             <span class="stat forks" v-tooltip="'Forks'">
               {{ details.forks_count | shortenNumber }}
-              <i class="material-icons">call_split</i>
+              <VueIcon icon="call_split"/>
             </span>
 
             <span class="stat issues" v-tooltip="'Open Issues'">
               {{ details.open_issues_count | shortenNumber }}
-              <i class="material-icons">error_outline</i>
+              <VueIcon icon="error_outline"/>
             </span>
           </span>
         </div>
@@ -153,6 +153,7 @@ export default {
     > div {
       display: flex;
       flex-direction: row;
+      align-items center
 
       &:not(:last-child) {
         margin-bottom: 6px;
@@ -162,7 +163,13 @@ export default {
 
   .label {
     flex: 100% 1 1;
-    ellipsis();
+    display inline-flex
+    align-items center
+    ellipsis()
+  }
+
+  .open-url {
+    margin-left 2px
   }
 
   .module-label {
@@ -198,15 +205,26 @@ export default {
   .details,
   .secondary {
     color: darken(white, 30%);
+
+    .vue-icon {
+      >>> svg {
+        fill @color
+      }
+    }
   }
 
   .details {
     flex: auto 0 0;
 
     .stat {
-      display: inline-block;
+      display: inline-flex;
+      align-items center
+      justify-content flex-end
       width: 55px;
-      text-align: right;
+
+      .vue-icon {
+        margin-left 2px
+      }
 
       @media ({$medium-screen}) {
         &:not(:first-child) {

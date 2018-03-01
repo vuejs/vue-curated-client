@@ -44,8 +44,7 @@ export default {
   height: 100%;
   max-width: 700px;
   box-sizing: border-box;
-  background: rgba(black, .025);
-  // border-right: solid 1px darken(white, 5%);
+  background: rgba($vue-color-dark-neutral, .05);
   float: left;
 }
 
@@ -69,11 +68,11 @@ export default {
   }
 
   .left-pane {
-    border-left: solid 1px darken(white, 5%);
+    border-left: solid 1px rgba($vue-color-dark-neutral, .1);
   }
 
   .page-wrapper {
-    border-right: solid 1px darken(white, 5%);
+    border-right: solid 1px rgba($vue-color-dark-neutral, .1);
   }
 }
 

@@ -2,7 +2,7 @@
   <section class="module-release">
     <div class="header">
       <div class="dates">
-        <span v-tooltip="humanDate(data.published_at)"><i class="material-icons">access_time</i> {{ data.published_at | fromNow }}</span>
+        <span v-tooltip="humanDate(data.published_at)"><VueIcon icon="access_time"/> {{ data.published_at | fromNow }}</span>
       </div>
       <div class="title">
         <a class="tag-name" :href="data.html_url" target="_blank">{{ data.tag_name }}</a>

@@ -15,14 +15,14 @@
         </div>
         <div class="message">
           <span>Recently updated!</span>
-          <a href="https://github.com/vuejs/vue-router/releases">See what's new <i class="material-icons">arrow_forward</i></a>
+          <a href="https://github.com/vuejs/vue-router/releases">See what's new <VueIcon icon="arrow_forward"/></a>
         </div>
       </div>
 
     </section>
 
     <section>
-      <h1><i class="material-icons">whatshot</i> Trending</h1>
+      <h1><VueIcon icon="whatshot"/> Trending</h1>
       <div class="modules">
         <div v-for="module of modules" class="module">
           <span class="label">
@@ -35,7 +35,7 @@
     </section>
 
     <section>
-      <h1><i class="material-icons">star</i> Popular</h1>
+      <h1><VueIcon icon="star"/> Popular</h1>
       <div class="modules">
         <div v-for="module of modules" class="module">
           <span class="label">
@@ -48,7 +48,7 @@
     </section>
 
     <section>
-      <h1><i class="material-icons">history</i> Recent</h1>
+      <h1><VueIcon icon="history"/> Recent</h1>
       <div class="modules">
         <div v-for="module of modules" class="module">
           <span class="label">

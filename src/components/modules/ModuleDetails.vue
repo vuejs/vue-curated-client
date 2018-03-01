@@ -7,10 +7,14 @@
           <div class="empty fill" v-if="!data">
             <div>
               <p>
-                <i class="material-icons">cake</i>
+                <VueIcon icon="cake"/>
                 <span>If you were told there was a package here, that was a lie.</span>
               </p>
-              <button v-if="$responsive.mobile" @click="$router.replace({ name: 'home' })">Explore other packages</button>
+              <VueButton
+                v-if="$responsive.mobile"
+                :to="{ name: 'home' }"
+                class="primary"
+              >Explore other packages</VueButton>
             </div>
           </div>
           <template v-else>
@@ -22,7 +26,7 @@
 
                 <div class="toolbar">
                   <div class="back" v-if="$responsive.mobile">
-                    <router-link :to="{ name: 'home' }"><i class="material-icons">arrow_back</i></router-link>
+                    <router-link :to="{ name: 'home' }"><VueIcon icon="arrow_back" class="big"/></router-link>
                   </div>
 
                   <div class="title">
@@ -47,17 +51,17 @@
                   <span class="stats">
                     <a class="stat stars" :href="data.url + '/stargazers'" v-tooltip="'Stars'">
                       {{ data.details.stargazers_count | shortenNumber }}
-                      <i class="material-icons">star</i>
+                      <VueIcon icon="star"/>
                     </a>
 
                     <a class="stat forks" :href="data.url + '/network'" v-tooltip="'Forks'">
                       {{ data.details.forks_count | shortenNumber }}
-                      <i class="material-icons">call_split</i>
+                      <VueIcon icon="call_split"/>
                     </a>
 
                     <a class="stat issues" :href="data.url + '/issues'" v-tooltip="'Open Issues'">
                       {{ data.details.open_issues_count | shortenNumber }}
-                      <i class="material-icons">error_outline</i>
+                      <VueIcon icon="error_outline"/>
                     </a>
                   </span>
                 </div>
@@ -65,36 +69,48 @@
 
             </section>
 
-            <ui-tabs class="details-content">
-              <ui-tab id="general" label="General" icon="assignment">
+            <VueTabs class="details-content" group-class="primary start" animate>
+              <VueTab id="general" label="General" icon="assignment">
                 <section v-if="data.details.description" class="catcher description">
                   <div class="text" v-html="$parseEmoji(data.details.description)"></div>
                 </section>
 
                 <section class="general-info">
                   <div id="links" class="links">
-                    <a class="open-url" :href="data.url" target="_blank"><i class="material-icons">open_in_new</i> repo</a>
+                    <a class="open-url" :href="data.url" target="_blank">
+                      <VueIcon icon="open_in_new"/>
+                      <span>repo</span>
+                    </a>
 
-                    <a class="open-url" :href="data.url + '/issues'" target="_blank"><i class="material-icons">error_outline</i> issues</a>
+                    <a class="open-url" :href="data.url + '/issues'" target="_blank">
+                      <VueIcon icon="error_outline"/>
+                      <span>issues</span>
+                    </a>
 
-                    <a class="open-url" v-if="data.details.has_wiki" :href="data.url + '/wiki'" target="_blank"><i class="material-icons">import_contacts</i> wiki</a>
+                    <a class="open-url" v-if="data.details.has_wiki" :href="data.url + '/wiki'" target="_blank">
+                      <VueIcon icon="import_contacts"/>
+                      <span>wiki</span>
+                    </a>
 
-                    <a class="open-url" v-for="link of data.links" :href="link.url" target="_blank"><i class="material-icons">public</i> {{ link.label }}</a>
+                    <a class="open-url" v-for="link of data.links" :href="link.url" target="_blank">
+                      <VueIcon icon="public"/>
+                      <span>{{ link.label }}</span>
+                    </a>
                   </div>
 
                   <div id="times" class="times">
                     <span class="time info" v-tooltip="humanDate(data.details.updated_at)">
-                      <i class="material-icons">update</i>
+                      <VueIcon icon="update"/>
                       <span class="label">updated</span>
                       <span class="value">{{ data.details.updated_at | fromNow }}</span>
                     </span>
                     <span class="time info" v-tooltip="humanDate(data.details.pushed_at)">
-                      <i class="material-icons">arrow_upward</i>
+                      <VueIcon icon="arrow_upward"/>
                       <span class="label">pushed</span>
                       <span class="value">{{ data.details.pushed_at | fromNow }}</span>
                     </span>
                     <span class="time info" v-tooltip="humanDate(data.details.created_at)">
-                      <i class="material-icons">access_time</i>
+                      <VueIcon icon="access_time"/>
                       <span class="label">created</span>
                       <span class="value">{{ data.details.created_at | fromNow }}</span>
                     </span>
@@ -108,23 +124,26 @@
                 <section id="readme">
                   <readme :id="id"></readme>
                 </section>
-              </ui-tab>
+              </VueTab>
 
-              <ui-tab id="releases" label="Releases" icon="local_offer">
+              <VueTab id="releases" label="Releases" icon="local_offer">
                 <a class="catcher tip" :href="`${data.url}/releases.atom`" target="_blank">
-                  <i class="icon material-icons">rss_feed</i>
+                  <VueIcon class="icon" icon="rss_feed"/>
                   <div class="text">
                     Subscribe to the releases feed!
                   </div>
                 </a>
 
                 <releases :module-id="id"></releases>
-              </ui-tab>
-            </ui-tabs>
+              </VueTab>
+            </VueTabs>
           </template>
         </template>
 
-        <ui-loading-overlay :show="loading"></ui-loading-overlay>
+        <VueLoadingIndicator
+          v-if="loading"
+          class="overlay primary big"
+        />
       </div>
     </transition-group>
   </div>
@@ -206,10 +225,12 @@ export default {
 </script>
 
 <style lang="stylus">
+@import "~style/imports";
+
 .module-details {
   section {
     border: solid 1px darken(white, 5%);
-    margin: 24px;
+    margin: 24px 0;
     padding: 24px;
     border-radius: 2px;
 
@@ -219,7 +240,7 @@ export default {
       }
 
       .label {
-        color: $md-grey-500;
+        margin-right 4px
       }
     }
   }
@@ -268,9 +289,15 @@ section.header {
 
   a {
     color: white;
+    .vue-icon >>> svg {
+      fill @color
+    }
 
     &:hover {
       color: lighten($primary-color, 70%);
+      .vue-icon >>> svg {
+        fill @color
+      }
     }
   }
 
@@ -321,6 +348,9 @@ section.header {
 
     a {
       color: white;
+      .vue-icon >>> svg {
+        fill @color
+      }
     }
   }
 }
@@ -349,7 +379,6 @@ section.header {
   text-align: right;
 
   .stat {
-    display: inline-block;
     text-align: right;
     margin-left: 12px;
 
@@ -368,8 +397,7 @@ section.header {
   background: $primary-color;
   color: white;
   padding: 24px;
-  margin: 24px;
-  margin-bottom: 0;
+  margin 0
   border-radius: 2px;
   border: none;
   font-size: 20px;
@@ -378,10 +406,14 @@ section.header {
 
   .icon {
     flex: auto 0 0;
-    font-size: 24px;
+    width 24px
+    height @width
     margin-right: 12px;
     position: relative;
     top: 1px;
+    >>> svg {
+      fill @color
+    }
   }
 
   .text {
@@ -393,11 +425,16 @@ section.header {
   }
 }
 
-.details-content {
-  opacity: 0;
-  animation: slide-to-bottom .3s .15s cubic-bezier(0.0, 0.0, 0.2, 1);
-  animation-fill-mode: forwards;
-}
+.details-content
+  opacity 0
+  animation slide-to-bottom .3s .15s cubic-bezier(0.0, 0.0, 0.2, 1)
+  animation-fill-mode forwards
+  margin-top 12px
+  >>> .tabs
+    margin-left 24px
+  >>> .vue-tab-content
+    padding 24px
+
 
 section.general-info {
   > div:not(:last-child) {
@@ -407,8 +444,6 @@ section.general-info {
 
 .links {
   a {
-    display: inline-block;
-
     &:not(:last-child) {
       margin-right: 12px;
     }
@@ -426,10 +461,10 @@ section.general-info {
       margin: 12px !important;
       box-sizing: border-box;
       text-align: center;
+      flex-direction column
 
-      i {
-        display: block;
-        margin: auto;
+      .vue-icon {
+        margin 0
       }
     }
   }
@@ -437,7 +472,13 @@ section.general-info {
 
 .times {
   .time {
-    display: inline-block;
+    display: inline-flex;
+    align-items center
+
+    .vue-icon {
+      margin-right 4px
+    }
+
     @media({$small-screen}) {
       display: block;
     }

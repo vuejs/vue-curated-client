@@ -3,7 +3,10 @@
     <div>
       <h1 v-html="$parseEmoji(':cyclone:')"></h1>
       <p>It seems what you are looking for isn't here. It may have vanished in the infinite void of the web.</p>
-      <button @click="$router.replace({ name: 'home' })">Get me out of this!</button>
+      <VueButton
+        class="accent"
+        :to="{ name: 'home' }"
+      >Get me out of here!</VueButton>
     </div>
   </div>
 </template>

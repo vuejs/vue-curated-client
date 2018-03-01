@@ -2,7 +2,10 @@
   <div class="module-releases">
     <release v-for="release of releases" :key="release.id" :data="release"></release>
 
-    <ui-loading-overlay :show="loading"></ui-loading-overlay>
+    <VueLoadingIndicator
+      v-if="loading"
+      class="overlay primary big"
+    />
   </div>
 </template>
 

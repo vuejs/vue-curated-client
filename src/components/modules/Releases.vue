@@ -1,6 +1,17 @@
 <template>
   <div class="releases">
-    <ui-select v-model="input" :options="options"></ui-select>
+    <VueSelect
+      v-model="input"
+      button-class="flat big"
+    >
+      <VueSelectButton
+        v-for="option of options"
+        :key="option.id"
+        :value="option.id"
+        :label="option.label"
+        class="primary big"
+      />
+    </VueSelect>
   </div>
 </template>
 
@@ -13,10 +24,10 @@ export default {
   computed: {
     input: {
       get () {
-        return this.releases.find(r => r.id === this.currentRelease) || defaultOption
+        return (this.releases.find(r => r.id === this.currentRelease) || defaultOption).id
       },
       set (val) {
-        this.setRelease(val.id)
+        this.setRelease(val)
       },
     },
 

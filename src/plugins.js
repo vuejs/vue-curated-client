@@ -1,11 +1,12 @@
 import Vue from 'vue'
-import VTooltip from 'v-tooltip'
+import VueUi from '@vue/ui'
+import '@vue/ui/dist/vue-ui.css'
 import 'vue-resize/dist/vue-resize.css'
 import VueResize from 'vue-resize'
 import Responsive from './utils/responsive'
 import Emoji from './utils/emoji'
 
-Vue.use(VTooltip)
+Vue.use(VueUi)
 
 Vue.use(VueResize)
 
