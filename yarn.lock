@@ -14,9 +14,9 @@
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/@types/zen-observable/-/zen-observable-0.5.3.tgz#91b728599544efbb7386d8b6633693a3c2e7ade5"
 
-"@vue/ui@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@vue/ui/-/ui-0.1.1.tgz#046fec276c19de0516c038a01333fa0cb21467b7"
+"@vue/ui@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@vue/ui/-/ui-0.1.2.tgz#2ee6828c42ae2313cd4e5c481e830fb4194f19db"
   dependencies:
     focus-visible "^4.1.0"
     material-design-icons "^3.0.1"
