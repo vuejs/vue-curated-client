@@ -27,7 +27,7 @@ fetch(GRAPHQL_URI, {
 .then(result => {
   // here we're filtering out any type information unrelated to unions or interfaces
   const filteredData = result.data.__schema.types.filter(
-    type => type.possibleTypes !== null,
+    type => type.possibleTypes !== null
   )
   result.data.__schema.types = filteredData
   const file = path.resolve(__dirname, '../src/api/fragment-types.json')
