@@ -1,35 +1,40 @@
 {
   "name": "vue-curated-client",
   "description": "Web app displaying curated vue packages",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "dev": "cross-env NODE_ENV=development yarn run build-tasks && webpack-dev-server --inline --hot",
+    "build": "cross-env NODE_ENV=production yarn run build-tasks && webpack --progress --hide-modules",
     "start": "serve -p 80 -s",
-    "deploy": "bash deploy.sh",
-    "analyze": "cross-env ANALYZE=on npm run build"
+    "build-tasks": "yarn run task:fragment-matcher",
+    "task:fragment-matcher": "node ./tasks/update-fragment-matcher.js",
+    "analyze": "cross-env ANALYZE=on yarn run build"
   },
   "engines": {
     "node": ">6.9.1"
   },
   "dependencies": {
-    "apollo-client": "^1.0.4",
+    "apollo-cache-inmemory": "^1.1.9",
+    "apollo-client": "^2.2.5",
+    "apollo-link-http": "^1.5.2",
     "emojione": "^3.0.3",
+    "graphql": "^0.13.1",
+    "graphql-tag": "^2.8.0",
     "html-webpack-plugin": "^2.30.1",
     "marked": "^0.3.6",
     "moment": "^2.18.1",
     "numeral": "^2.0.6",
-    "serve": "^5.1.4",
+    "serve": "^6.5.1",
     "style-loader": "^0.18.2",
     "tether-drop": "^1.4.2",
     "v-tooltip": "^1.1.6",
-    "vue": "^2.3.2",
-    "vue-apollo": "^2.1.0-beta.7",
-    "vue-resize": "^0.1.2",
-    "vue-router": "^2.5.2",
-    "vuex": "^2.3.1"
+    "vue": "^2.5.13",
+    "vue-apollo": "^3.0.0-beta.4",
+    "vue-resize": "^0.4.4",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
@@ -49,12 +54,13 @@
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
     "file-loader": "^0.11.1",
+    "node-fetch": "^2.0.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
-    "vue-loader": "^12.0.2",
+    "vue-loader": "^14.1.1",
     "vue-template-compiler": "^2.3.2",
     "webpack": "^3.2.0",
     "webpack-bundle-analyzer": "^2.8.2",
-    "webpack-dev-server": "^2.4.4"
+    "webpack-dev-server": "^2.9.7"
   }
 }

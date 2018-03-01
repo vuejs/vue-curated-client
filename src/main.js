@@ -5,9 +5,6 @@ import './plugins'
 
 // Filters
 import * as filters from './filters'
-for (const k in filters) {
-  Vue.filter(k, filters[k])
-}
 
 // Global components
 import './components/common'
@@ -18,20 +15,24 @@ import router from './router'
 import store from './store'
 // Apollo GraphQL
 import { createProvider } from './api/apollo'
-const apolloProvider = createProvider()
 
 // Root component
 import App from './App'
+
+// Filters
+for (const k in filters) {
+  Vue.filter(k, filters[k])
+}
+
+const apolloProvider = createProvider()
 
 /* eslint-disable no-new */
 new Vue({
   router,
   store,
-  apolloProvider,
-
+  provide: apolloProvider.provide(),
   el: '#app',
-  render: h => h(App),
-
+  ...App,
   created () {
     this.$store.dispatch('init')
   },

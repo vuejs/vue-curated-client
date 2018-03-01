@@ -1,0 +1,1 @@
+{"__schema":{"types":[{"kind":"INTERFACE","name":"Entity","possibleTypes":[{"name":"Module"},{"name":"ModuleCategory"},{"name":"VueRelease"}]}]}}

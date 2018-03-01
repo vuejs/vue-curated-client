@@ -16,6 +16,13 @@
   </div>
 </template>
 
+<script>
+export default {
+  name: 'welcome-page',
+}
+</script>
+
+
 <style lang="stylus" scoped>
 @import "~style/imports";
 

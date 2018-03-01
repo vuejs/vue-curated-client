@@ -21,7 +21,7 @@
 import MainPane from '../modules/MainPane.vue'
 
 export default {
-  name: 'main',
+  name: 'main-page',
 
   components: {
     MainPane,

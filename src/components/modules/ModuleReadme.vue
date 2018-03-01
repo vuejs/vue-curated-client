@@ -32,6 +32,7 @@ export default {
     return {
       showFull: false,
       loading: 0,
+      readme: null,
     }
   },
 

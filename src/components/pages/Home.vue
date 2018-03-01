@@ -70,7 +70,7 @@ const kazuponAvatar = 'https://avatars3.githubusercontent.com/u/72989?v=3&s=460'
 const akryumAvatar = 'https://avatars3.githubusercontent.com/u/2798204?v=3&s=460'
 
 export default {
-  name: 'home',
+  name: 'home-page',
 
   data () {
     return {
