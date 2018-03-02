@@ -44,7 +44,7 @@ export default {
   height: 100%;
   max-width: 700px;
   box-sizing: border-box;
-  background: rgba($vue-color-dark-neutral, .05);
+  background: lighten($vue-color-light-neutral, 70%);
   float: left;
 }
 

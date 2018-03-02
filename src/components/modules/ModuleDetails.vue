@@ -229,7 +229,7 @@ export default {
 
 .module-details {
   section {
-    border: solid 1px darken(white, 5%);
+    border: solid 1px lighten($vue-color-light-neutral, 30%);
     margin: 24px 0;
     padding: 24px;
     border-radius: 2px;

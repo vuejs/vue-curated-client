@@ -204,7 +204,7 @@ export default {
 
   .details,
   .secondary {
-    color: darken(white, 30%);
+    color: lighten($vue-color-dark, 60%);
 
     .vue-icon {
       >>> svg {

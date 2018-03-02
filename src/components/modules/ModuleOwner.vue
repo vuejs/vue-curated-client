@@ -48,6 +48,6 @@ export default {
 }
 
 .label {
-  color: $md-grey-500;
+  color: lighten($vue-color-dark, 50%);
 }
 </style>
