@@ -1,14 +1,16 @@
-var path = require('path')
-var webpack = require('webpack')
-var htmlPlugin = require('html-webpack-plugin')
-var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const path = require('path')
+const webpack = require('webpack')
+const HtmlPlugin = require('html-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
-var momentLocales = /en/
+const momentLocales = /en/
+const outputPath = path.resolve(__dirname, './dist')
 
 module.exports = {
   entry: './src/main.js',
   output: {
-    path: path.resolve(__dirname, './dist'),
+    path: outputPath,
     publicPath: '/',
     filename: 'build.js',
   },
@@ -67,8 +69,8 @@ module.exports = {
   },
   devtool: '#eval-source-map',
   plugins: [
-    new htmlPlugin({
-      template: 'src/index.html'
+    new HtmlPlugin({
+      template: 'src/index.html',
     }),
     new webpack.DefinePlugin({
       'process.env': {
@@ -93,6 +95,12 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.LoaderOptionsPlugin({
       minimize: true,
     }),
+    new CopyPlugin([
+      {
+        from: path.resolve(__dirname, './public'),
+        to: outputPath,
+      },
+    ]),
   ])
 }
 
