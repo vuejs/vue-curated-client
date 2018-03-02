@@ -126,7 +126,7 @@
                 </section>
               </VueTab>
 
-              <VueTab id="releases" label="Releases" icon="local_offer">
+              <VueTab id="releases" label="Releases" icon="local_offer" lazy>
                 <a class="catcher tip" :href="`${data.url}/releases.atom`" target="_blank">
                   <VueIcon class="icon" icon="rss_feed"/>
                   <div class="text">
